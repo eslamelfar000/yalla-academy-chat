@@ -40,6 +40,20 @@ content: [
       },
     },
     extend: {
+            typography: {
+        DEFAULT: {
+          css: {
+            color: "#333", // Default text color
+            maxWidth: "none", // Disable max-width
+            h1: { fontWeight: "800" }, // Custom heading weight
+            a: { color: "#4f46e5" }, // Custom link color
+            // RTL support
+            "ul > li::marker, ol > li::marker": {
+              color: "#6b7280",
+            },
+          },
+        },
+      },
       colors: {
         border: 'hsl(var(--border))',
         default: {
@@ -206,5 +220,5 @@ content: [
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };

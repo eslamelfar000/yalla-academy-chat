@@ -4,8 +4,6 @@ function TeacherInfo({ teacher }) {
   const [activeTab, setActiveTab] = useState("about-me");
   const [more, setMore] = useState(false);
 
-
-
   // Handle case where teacher is undefined
   if (!teacher) {
     return (
@@ -44,9 +42,7 @@ function TeacherInfo({ teacher }) {
               <span className="opacity-60">Speak: </span>
               <ul className="flex gap-2">
                 {teacher?.languages ? (
-                  <span className="text-main">
-                    {teacher?.languages}
-                  </span>
+                  <span className="text-main">{teacher?.languages}</span>
                 ) : (
                   <span className="text-main">No Language Added</span>
                 )}
@@ -93,8 +89,30 @@ function TeacherInfo({ teacher }) {
           {activeTab === "about-me" ? (
             <div className="about-me">
               <p className="opacity-60 text-md">
-                {teacher?.about_me?.slice(0, more ? 5000 : 300) || "No data"}
-                {!more && "...."}
+                <div
+                  className="prose prose-sm md:prose-base lg:prose-md max-w-none 
+                    prose-p:my-2 prose-headings:font-bold
+                    prose-ul:list-disc prose-ul:pl-6 prose-ul:my-2
+                    prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-2
+                    prose-li:my-1 prose-li:marker:text-gray-600
+                    [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:my-2
+                    [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:my-2
+                    [&>li]:my-1 [&>li]:marker:text-gray-600
+                    [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-2
+                    [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-2
+                    [&_li]:my-1 [&_li]:marker:text-gray-600"
+                  style={{
+                    "--tw-prose-lists": "inherit",
+                    "--tw-prose-list-markers": "inherit",
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      teacher?.about_me && typeof teacher?.about_me === "string"
+                        ? teacher?.about_me.slice(0, more ? 10000 : 300) +
+                          (more ? "" : "....")
+                        : "No information provided",
+                  }}
+                />
               </p>
               <button
                 onClick={() => setMore(!more)}
@@ -106,9 +124,31 @@ function TeacherInfo({ teacher }) {
           ) : (
             <div className="about-course">
               <p className="opacity-60 text-md">
-                {teacher?.about_course?.slice(0, more ? 5000 : 500) ||
-                  "No data"}
-                {!more && "...."}
+                <div
+                  className="prose prose-sm md:prose-base lg:prose-md max-w-none 
+                    prose-p:my-2 prose-headings:font-bold
+                    prose-ul:list-disc prose-ul:pl-6 prose-ul:my-2
+                    prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-2
+                    prose-li:my-1 prose-li:marker:text-gray-600
+                    [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:my-2
+                    [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:my-2
+                    [&>li]:my-1 [&>li]:marker:text-gray-600
+                    [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-2
+                    [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-2
+                    [&_li]:my-1 [&_li]:marker:text-gray-600"
+                  style={{
+                    "--tw-prose-lists": "inherit",
+                    "--tw-prose-list-markers": "inherit",
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      teacher?.about_course &&
+                      typeof teacher?.about_course === "string"
+                        ? teacher?.about_course.slice(0, more ? 10000 : 300) +
+                          (more ? "" : "....")
+                        : "No information provided",
+                  }}
+                />
               </p>
               <button
                 onClick={() => setMore(!more)}
