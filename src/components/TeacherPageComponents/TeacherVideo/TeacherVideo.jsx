@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { EyeIcon } from "lucide-react";
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -52,7 +53,10 @@ function TeacherVideo({ teacher }) {
           <iframe
             width="100%"
             height="231"
-            src={convertToEmbedUrl(teacher?.video_link) || "https://www.youtube.com/embed/9hlfAW_R89M?si=VT87_1luizExtM1T"}
+            src={
+              convertToEmbedUrl(teacher?.video_link) ||
+              "https://www.youtube.com/embed/9hlfAW_R89M?si=VT87_1luizExtM1T"
+            }
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             referrerPolicy="no-referrer-when-downgrade"
@@ -68,7 +72,28 @@ function TeacherVideo({ teacher }) {
               Lesson price start from
             </h2>
             <span className="text-2xl font-bold">
-              {teacher?.package_before_price || "0"} $
+              {localStorage.getItem("yall_user_data") &&
+              Cookies.get("yall_auth_token") ? (
+                <p className="font-[600] text-main text-lg">
+                  <span className="text-main">{package_before_price}</span>$
+                </p>
+              ) : (
+                <EyeIcon
+                  onClick={() => {
+                    toast.warning("Please login to see the price", {
+                      duration: 5000,
+                      action: {
+                        label: "Login",
+                        onClick: () => {
+                          navigate("/login");
+                        },
+                      },
+                    });
+                  }}
+                  width={25}
+                  className="opacity-70 hover:text-main transition duration-300 hover:opacity-100"
+                />
+              )}
             </span>
           </div>
 
