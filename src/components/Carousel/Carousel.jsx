@@ -34,11 +34,11 @@ function Carousel({ data, isLoading }) {
               <SwiperSlide key={item.id} className="">
                 <div className="slide flex flex-col sm:flex-row justify-center items-center sm:items-end md:items-end">
                   <div className="slide-img">
-                    <figure className="w-80 h-120 rounded-lg">
+                    <figure className="w-100 h-120 rounded-lg bg-main/20">
                       <img
                         src={item?.image || image}
                         alt=""
-                        className="object-full h-full w-full rounded-lg rounded-br-none"
+                        className=" h-full w-full rounded-lg rounded-br-none"
                       />
                     </figure>
                   </div>

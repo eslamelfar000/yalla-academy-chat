@@ -67,7 +67,7 @@ function TeacherCard({ teacher }) {
             <ul className="flex justify-between">
               <li>
                 <span className="font-[600] opacity-70">Speak : </span>
-                {languages && languages.length > 0 ? (
+                {languages && languages?.length > 0 ? (
                   <span className="font-[600] text-main cursor-pointer">
                     {languages}
                   </span>
@@ -80,7 +80,7 @@ function TeacherCard({ teacher }) {
 
               <li>
                 <span className="opacity-70">
-                  ({languages ? languages.split(",").length : 0})
+                  ({languages ? languages?.split(",").length : 0})
                 </span>
               </li>
             </ul>
