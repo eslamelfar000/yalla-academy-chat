@@ -74,8 +74,11 @@ function TeacherVideo({ teacher }) {
             <span className="text-2xl font-bold">
               {localStorage.getItem("yall_user_data") &&
               Cookies.get("yall_auth_token") ? (
-                <p className="font-[600] text-main text-lg">
-                  <span className="text-main">{package_before_price}</span>$
+                <p className="font-[600] text-main text-lg flex items-center gap-1">
+                  <span className="text-main">
+                    {teacher?.package_before_price}
+                  </span>
+                  $
                 </p>
               ) : (
                 <EyeIcon
