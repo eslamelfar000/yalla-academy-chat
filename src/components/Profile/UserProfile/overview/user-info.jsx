@@ -61,7 +61,10 @@ const UserInfo = ({ user_data, isLoading }) => {
         </p> */}
         <ul className=" space-y-4 w-full">
           {userInfo.map((item, index) => (
-            <li key={`user-info-${index}`} className="flex items-center justify-between w-full">
+            <li
+              key={`user-info-${index}`}
+              className="flex items-center justify-between w-full"
+            >
               <div className="flex-none  2xl:w-56 flex items-center gap-1.5">
                 <span className="text-main">{item.icon}</span>
                 <span className="text-sm font-medium text-default-800 opacity-80">
@@ -108,12 +111,23 @@ const UserInfo = ({ user_data, isLoading }) => {
 
                 <div className="icons flex items-center gap-2 select-none">
                   <div className="icon">
-                    <a href="#">
+                    <a
+                      href={
+                        user_data?.assiend_teacher?.teacher?.zoom_link ||
+                        "https://www.zoom.com/"
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <img src={zoom} alt="zoom" className="size-17" />
                     </a>
                   </div>
                   <Link to={`/chat`}>
-                    <Button variant="outline" color="main" className="hover:bg-main hover:text-white cursor-pointer flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      color="main"
+                      className="hover:bg-main hover:text-white cursor-pointer flex items-center gap-2"
+                    >
                       <IoChatbubblesOutline className="size-6" />
                       <span className="font-medium text-md transition duration-300 select-none">
                         Chat
