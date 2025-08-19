@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function Hero() {
-  const user = JSON.parse(localStorage.getItem("yall_user_data")) || Cookies.get("yall_auth_token");
+  const user = JSON.parse(localStorage.getItem("yall_user_data")) && Cookies.get("yall_auth_token");
   return (
     <>
       <div className="hero min-h-[calc(100vh-15rem)] py-20 lg:py-0 sm:px-5 lg:px-20 xl:px-0">
