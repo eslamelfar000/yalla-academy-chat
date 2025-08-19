@@ -34,15 +34,15 @@ function Carousel({ data, isLoading }) {
               <SwiperSlide key={item.id} className="">
                 <div className="slide flex flex-col sm:flex-row justify-center items-center sm:items-end md:items-end">
                   <div className="slide-img">
-                    <figure className="w-100 h-120 rounded-lg bg-main/20">
+                    <figure className="w-100 h-120 rounded-t-lg rounded-bl-lg bg-main/20 overflow-hidden p-2">
                       <img
                         src={item?.image || image}
                         alt=""
-                        className=" h-full w-full rounded-lg rounded-br-none"
+                        className=" h-full w-full rounded-lg rounded-br-none object-contain"
                       />
                     </figure>
                   </div>
-                  <div className="slide-body bg-second h-105 text-left p-5 lg:pr-20 flex flex-col justify-center rounded-bl-none rounded-lg w-full">
+                  <div className="slide-body bg-second h-105 text-left p-5 lg:pr-20 flex flex-col justify-center rounded-br-lg rounded-tr-lg w-full">
                     <h2 className="font-[600] mb-5 text-2xl capitalize">
                       {item?.title || "No title"}
                     </h2>
