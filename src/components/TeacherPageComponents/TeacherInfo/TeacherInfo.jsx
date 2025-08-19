@@ -32,7 +32,7 @@ function TeacherInfo({ teacher }) {
             />
           </figure>
           <div className="info flex-1">
-            <h2 className="text-xl font-[600]">
+            <h2 className="text-xl font-[600] capitalize">
               {teacher?.name || "Teacher Name"}
             </h2>
             <span className="opacity-50 text-md">

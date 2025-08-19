@@ -52,7 +52,7 @@ function TeacherCard({ teacher }) {
         <div className="card-body">
           <div className="card-head flex justify-between ">
             <div className="name">
-              <h2 className="card-title text-lg font-[700]">
+              <h2 className="card-title text-lg font-[700] capitalize">
                 {name || "Teacher Name"}
               </h2>
               <p className="opacity-60">{role || "Teacher"}</p>

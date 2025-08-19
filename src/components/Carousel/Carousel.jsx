@@ -17,7 +17,7 @@ function Carousel({ data, isLoading }) {
     <>
       <div className="slider w-[90%] lg:w-200 relative">
         <Swiper
-          spaceBetween={10}
+          spaceBetween={30}
           //   loop={true}
           className="mySwiper user-select-none"
           onSwiper={setSwiperInstance}
@@ -32,9 +32,9 @@ function Carousel({ data, isLoading }) {
           ) : data?.length > 0 ? (
             data?.map((item) => (
               <SwiperSlide key={item.id} className="">
-                <div className="slide  justify-center items-center sm:items-end md:items-end">
+                <div className="slide flex flex-col gap-5">
                   <div className="slide-img">
-                    <figure className="w-full rounded-t-lg h-120 rounded-bl-lg bg-white overflow-hidden p-2 border-2 border-main">
+                    <figure className="w-full h-120 rounded-lg bg-white overflow-hidden p-2 border-2 border-main">
                       <img
                         src={item?.image || image}
                         alt=""
@@ -42,7 +42,7 @@ function Carousel({ data, isLoading }) {
                       />
                     </figure>
                   </div>
-                  <div className="slide-body bg-second h-50 text-left p-5 lg:pr-20 flex flex-col justify-center rounded-br-lg rounded-tr-lg w-full">
+                  <div className="slide-body bg-second h-50 text-left p-5 lg:pr-20 flex flex-col justify-center rounded-lg w-full">
                     <h2 className="font-[600] mb-5 text-2xl capitalize">
                       {item?.title || "No title"}
                     </h2>
