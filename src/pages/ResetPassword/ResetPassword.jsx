@@ -41,7 +41,7 @@ export default function ResetPassword() {
           <div className="w-full space-y-6">
             <img src={logo} alt="Logo" className="mx-auto" />
             <h2 className="text-center text-2xl font-semibold text-gray-700">
-              {step === 1 && "Enter your phone number"}
+              {step === 1 && "Enter your email"}
               {step === 2 && "Enter verification code"}
               {step === 3 && "Set new password"}
             </h2>

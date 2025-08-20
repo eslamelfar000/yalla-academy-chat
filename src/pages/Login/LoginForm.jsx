@@ -90,15 +90,7 @@ function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem className="relative">
-                <div className="flex justify-between items-center">
                   <FormLabel>Password</FormLabel>
-                  <Link
-                    to="/reset-password"
-                    className="text-sm text-main hover:underline"
-                  >
-                    Forgot Password?
-                  </Link>
-                </div>
                 <FormControl>
                   <Input
                     placeholder="password"
@@ -135,6 +127,15 @@ function LoginForm() {
               </FormItem>
             )}
           />
+
+          <div className="flex justify-end items-center">
+            <Link
+              to="/reset-password"
+              className="text-sm text-main hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </div>
 
           <div className="flex justify-center mb-3">
             <Button
