@@ -40,7 +40,7 @@ function HomeCards() {
   return (
     <>
       <motion.div
-        className="flex justify-center py-10"
+        className="flex justify-center py-20"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -69,12 +69,12 @@ function HomeCards() {
                   className="group-hover:scale-90 transition duration-500"
                 />
               </figure>
-              <div className="card-body">
+              <div className="card-body p-3">
                 <p className="font-[500] group-hover:text-main-dark transition duration-300">
                   Achieve fluency with lessons tailored to your specific goals
                   and needs.
                 </p>
-                <div className="card-actions justify-end"></div>
+                {/* <div className="card-actions justify-end"></div> */}
               </div>
             </motion.div>
           ))}
