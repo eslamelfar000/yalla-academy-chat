@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp, FaYoutube } from "react-icons/fa";
 
 function Footer({ custom }) {
   return (
@@ -21,16 +21,32 @@ function Footer({ custom }) {
           </p>
         </aside>
         <nav className="grid-flow-col justify-self-center gap-4 md:place-self-center md:justify-self-end">
-          <a href="/" className="text-main hover:text-black transition-colors">
+          <a
+            href="https://www.facebook.com/profile.php?id=61553501452544"
+            target="_blank"
+            className="text-main hover:text-black transition-colors"
+          >
             <FaFacebook size={25} />
           </a>
-          <a href="/" className="text-main hover:text-black transition-colors">
+          <a
+            href="https://www.instagram.com/yalla879/?next=%2F"
+            target="_blank"
+            className="text-main hover:text-black transition-colors"
+          >
             <FaInstagram size={25} />
           </a>
-          <a href="/" className="text-main hover:text-black transition-colors">
-            <FaTwitter size={25} />
+          <a
+            href="https://api.whatsapp.com/send?phone=972546487767"
+            target="_blank"
+            className="text-main hover:text-black transition-colors"
+          >
+            <FaWhatsapp size={25} />
           </a>
-          <a href="/" className="text-main hover:text-black transition-colors">
+          <a
+            href="https://www.youtube.com/@-jc1ro"
+            target="_blank"
+            className="text-main hover:text-black transition-colors"
+          >
             <FaYoutube size={25} />
           </a>
         </nav>

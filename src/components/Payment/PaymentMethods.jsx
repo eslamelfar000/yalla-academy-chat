@@ -76,7 +76,7 @@ function PaymentMethods({
 
         <div className="methods text-pay">
           <ul className="flex flex-col md:mx-7">
-            <li className="px-5 py-5">
+            {/* <li className="px-5 py-5">
               <label
                 onClick={() => handleSelect("paypal")}
                 className="fieldset-label item hover:bg-gray-200 flex justify-between items-center p-2 px-3 rounded-lg cursor-pointer transition-all duration-300"
@@ -110,7 +110,7 @@ function PaymentMethods({
                   />
                 </div>
               </label>
-            </li>
+            </li> */}
 
             <div className={`flex justify-center`}>
               <hr className="w-[60%] opacity-20" />
@@ -228,7 +228,7 @@ function PaymentMethods({
                     <PiNumberCircleOneThin className="size-8 lg:size-6 text-main" />
                     <p>
                       Transfer Money to this phone number :{" "}
-                      <strong className="text-main">+201045873234</strong>
+                      <strong className="text-main">+972 54-648-7767</strong>
                     </p>
                   </li>
                   <li className="flex items-center gap-2">

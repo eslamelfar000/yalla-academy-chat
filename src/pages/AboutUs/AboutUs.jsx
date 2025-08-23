@@ -24,29 +24,22 @@ const AboutUs = () => {
       icon: "tabler:heart",
       title: "Passion for Education",
       description:
-        "We believe in the transformative power of education and are passionate about helping students achieve their dreams.",
+        "We believe in teaching Arabic with passion and creativity, making learning enjoyable and inspiring",
       color: "bg-red-50 border-red-200",
     },
     {
       icon: "tabler:target",
       title: "Excellence",
       description:
-        "We strive for excellence in everything we do, from our teaching methods to our student support services.",
+        "We connect language with culture, helping students truly experience the Arab world.",
       color: "bg-blue-50 border-blue-200",
     },
     {
       icon: "tabler:users-group",
       title: "Community",
       description:
-        "Building a supportive community where students can learn, grow, and connect with like-minded individuals.",
+        "We are committed to quality, accessibility, and building a supportive learning community.",
       color: "bg-green-50 border-green-200",
-    },
-    {
-      icon: "tabler:bulb",
-      title: "Innovation",
-      description:
-        "Embracing innovative teaching methods and technology to provide the best learning experience.",
-      color: "bg-purple-50 border-purple-200",
     },
   ];
 
@@ -189,7 +182,7 @@ const AboutUs = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((value, index) => (
               <Card
                 key={index}

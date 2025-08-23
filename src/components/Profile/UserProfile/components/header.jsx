@@ -30,9 +30,10 @@ const Header = ({ user_data, previewPublicImage }) => {
       <Card className="mt-6 rounded-t-2xl ">
         <CardContent className="p-0">
           <div
-            className="relative h-[200px] lg:h-[296px] rounded-t-2xl w-full object-cover bg-no-repeat"
-            style={{ backgroundImage: `url(${coverImage})` }}
+            className="relative h-[200px] lg:h-[296px] rounded-t-2xl w-full object-cover bg-no-repeat bg-[#92D2F4] bg-[url('/bg.jpg')] bg-cover bg-center"
+            // style={{ backgroundImage: `url(${coverImage})` }}
           >
+            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 rounded-t-2xl"></div>
             <div className="flex lg:items-center gap-4 absolute ltr:left-10 rtl:right-10 -bottom-5 lg:-bottom-8">
               <div>
                 <img
@@ -46,10 +47,10 @@ const Header = ({ user_data, previewPublicImage }) => {
                 />
               </div>
               <div>
-                <div className="text-xl lg:text-2xl font-semibold text-primary-foreground mb-1">
+                <div className="text-xl text-white lg:text-2xl font-bold mb-1">
                   {user_data?.name || profileUser?.fullName}
                 </div>
-                <div className="text-xs lg:text-sm font-medium text-default-100 dark:text-default-900 pb-1.5 text-white">
+                <div className="text-xs lg:text-sm font-medium dark:text-default-900 pb-1.5 text-white">
                   @{user_data?.role || profileUser?.bio}
                 </div>
               </div>
@@ -65,7 +66,7 @@ const Header = ({ user_data, previewPublicImage }) => {
                   responseText="Account Deleted Successfully"
                   method={"GET"}
                 />
-                <Button asChild className="rounded px-5 bg-main-dark" size="sm">
+                {/* <Button asChild className="rounded px-5 bg-main-dark" size="sm">
                   <Link to="/profile-setting">
                     <Icon
                       className="w-4 h-4 ltr:mr-1 rtl:ml-1"
@@ -73,7 +74,7 @@ const Header = ({ user_data, previewPublicImage }) => {
                     />
                     Edit
                   </Link>
-                </Button>
+                </Button> */}
               </div>
             )}
           </div>
