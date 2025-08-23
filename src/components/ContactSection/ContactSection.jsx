@@ -105,7 +105,7 @@ function ContactSection() {
                   <div className="absolute bottom-0 w-full lg:p-11 p-5">
                     <div className="bg-white rounded-lg p-6 block flex flex-col items-start">
                       <a
-                        href={`https://api.whatsapp.com/send?phone=${phone}`}
+                        href={`tel:${phone}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center mb-6 hover:text-main transition-all duration-300"
