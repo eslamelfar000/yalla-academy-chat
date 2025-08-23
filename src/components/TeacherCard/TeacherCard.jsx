@@ -6,6 +6,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function TeacherCard({ teacher }) {
   const navigate = useNavigate();
@@ -18,21 +19,29 @@ function TeacherCard({ teacher }) {
     is_new,
     id,
     package_before_price,
-    reviews
+    reviews,
   } = teacher;
 
   // console.log("teacher", teacher);
 
-  const averageRating = reviews?.map((review) => review.rate).reduce((acc, review) => acc + review, 0) / reviews?.length;
-
+  const averageRating =
+    reviews
+      ?.map((review) => review.rate)
+      .reduce((acc, review) => acc + review, 0) / reviews?.length;
 
   return (
     <>
-      <div className="card overflow-hidden relative  hover:-translate-y-3 bg-white border-solid border-2 border-second hover:bg-second w-85 pt-4 transition duration-300 hover:shadow-xl rounded-xl">
+      <div className="card overflow-hidden relative hover:-translate-y-3 bg-white border-solid border-2 border-second hover:bg-second w-85 pt-4 transition duration-300 hover:shadow-xl rounded-xl">
         {is_new && (
-          <div className="new-tag absolute -rotate-40 top-2 -left-12 bg-main text-white text-sm font-[500] px-15 py-1 shadow-xl">
+          <motion.div
+            className="new-tag absolute -rotate-40 top-2 -left-12 bg-main text-white text-sm font-[500] px-15 py-1 shadow-xl"
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
             New
-          </div>
+          </motion.div>
         )}
         <figure>
           <div className="img-box w-35 h-35 btn-circle overflow-hidden border-2 p-[3px] border-main">
@@ -59,7 +68,11 @@ function TeacherCard({ teacher }) {
             </div>
 
             <div className="review">
-              <Rating style={{ maxWidth: 100 }} value={averageRating || 0} readOnly />
+              <Rating
+                style={{ maxWidth: 100 }}
+                value={averageRating || 0}
+                readOnly
+              />
             </div>
           </div>
 

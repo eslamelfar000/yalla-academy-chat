@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -70,59 +71,101 @@ const AboutUs = () => {
     },
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <LayoutWithVerification>
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative py-20 flex items-center justify-center overflow-hidden">
+      <motion.section
+        className="relative py-20 flex items-center justify-center overflow-hidden"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         {/* Background Elements */}
         <div className="absolute inset-0 bg-main-dark"></div>
-        <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
-        <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/5 rounded-full blur-lg"></div>
+        <motion.div
+          className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl"
+          variants={itemVariants}
+        ></motion.div>
+        <motion.div
+          className="absolute bottom-20 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl"
+          variants={itemVariants}
+        ></motion.div>
+        <motion.div
+          className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/5 rounded-full blur-lg"
+          variants={itemVariants}
+        ></motion.div>
 
         <div className="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
-          {/* <Badge className="mb-6 bg-white/20 text-white border-white/30">
-            About Our Platform
-          </Badge> */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <motion.h1
+            className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+            variants={itemVariants}
+          >
             Empowering Students
             <span className="block text-4xl md:text-5xl font-light mt-2">
               Through Quality Education
             </span>
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto">
+          </motion.h1>
+          <motion.p
+            className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto"
+            variants={itemVariants}
+          >
             We're on a mission to make quality education accessible to everyone,
             connecting students with expert teachers worldwide.
-          </p>
+          </motion.p>
         </div>
-      </section>
-
-      {/* Stats Section */}
-      {/* <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center group">
-                <div className="w-16 h-16 bg-[#5685CE] rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Icon icon={stat.icon} className="text-2xl text-white" />
-                </div>
-                <h3 className="text-3xl font-bold text-[#5685CE] mb-2">
-                  {stat.number}
-                </h3>
-                <p className="text-gray-600">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
+      </motion.section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-[#F5F6F9]">
+      <motion.section
+        className="py-20 bg-[#F5F6F9]"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
+            <motion.div className="space-y-6" variants={itemVariants}>
               <Badge className="bg-[#5685CE] text-white">Our Mission</Badge>
               <h2 className="text-4xl font-bold text-gray-900">
                 Transforming Education for the Digital Age
@@ -134,25 +177,34 @@ const AboutUs = () => {
                 experience.
               </p>
               <div className="space-y-4">
-                <div className="flex items-center space-x-3">
+                <motion.div
+                  className="flex items-center space-x-3"
+                  variants={itemVariants}
+                >
                   <div className="w-2 h-2 bg-[#5685CE] rounded-full"></div>
                   <span className="text-gray-700">
                     Personalized learning paths
                   </span>
-                </div>
-                <div className="flex items-center space-x-3">
+                </motion.div>
+                <motion.div
+                  className="flex items-center space-x-3"
+                  variants={itemVariants}
+                >
                   <div className="w-2 h-2 bg-[#5685CE] rounded-full"></div>
                   <span className="text-gray-700">Expert-led instruction</span>
-                </div>
-                <div className="flex items-center space-x-3">
+                </motion.div>
+                <motion.div
+                  className="flex items-center space-x-3"
+                  variants={itemVariants}
+                >
                   <div className="w-2 h-2 bg-[#5685CE] rounded-full"></div>
                   <span className="text-gray-700">
                     Interactive learning tools
                   </span>
-                </div>
+                </motion.div>
               </div>
-            </div>
-            <div className="relative">
+            </motion.div>
+            <motion.div className="relative" variants={itemVariants}>
               <div className="bg-[#5685CE] rounded-2xl p-8 text-white">
                 <Icon icon="tabler:bulb" className="text-4xl mb-4" />
                 <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
@@ -163,15 +215,21 @@ const AboutUs = () => {
                 </p>
               </div>
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-[#5685ce6b] rounded-full blur-xl"></div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Values Section */}
-      <section className="py-20 bg-white">
+      <motion.section
+        className="py-20 bg-white"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
+          <motion.div className="text-center mb-16" variants={itemVariants}>
             <Badge className="bg-[#5685CE] text-white mb-4">Our Values</Badge>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               What Drives Us Forward
@@ -180,119 +238,84 @@ const AboutUs = () => {
               Our core values shape everything we do and guide us in our mission
               to provide exceptional educational experiences.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((value, index) => (
-              <Card
+              <motion.div
                 key={index}
-                className={`${value.color} border-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-2`}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{
+                  y: -10,
+                  transition: { duration: 0.3 },
+                }}
               >
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-[#5685CE] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Icon icon={value.icon} className="text-2xl text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-gray-600">{value.description}</p>
-                </CardContent>
-              </Card>
+                <Card
+                  className={`${value.color} border-2 hover:shadow-lg transition-all duration-300`}
+                >
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 bg-[#5685CE] rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon icon={value.icon} className="text-2xl text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {value.title}
+                    </h3>
+                    <p className="text-gray-600">{value.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* Team Section */}
-      {/* <section className="py-20 bg-[#F5F6F9]">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <Badge className="bg-[#5685CE] text-white mb-4">Our Team</Badge>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Meet the Minds Behind Our Success
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our dedicated team of education experts and technology innovators
-              work together to create the best learning experience for our
-              students.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {team.map((member, index) => (
-              <Card
-                key={index}
-                className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className="relative">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <h3 className="text-xl font-bold">{member.name}</h3>
-                    <p className="text-white/80">{member.role}</p>
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <p className="text-gray-600">{member.description}</p>
-                  <div className="flex space-x-3 mt-4">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-[#5685CE] hover:border-main text-[#5685CE] hover:bg-[#5685CE] hover:text-white"
-                    >
-                      <Icon icon="tabler:brand-linkedin" className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-[#5685CE] hover:border-main text-[#5685CE] hover:bg-[#5685CE] hover:text-white"
-                    >
-                      <Icon icon="tabler:brand-twitter" className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section> */}
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-main relative overflow-hidden">
+      <motion.section
+        className="py-20 bg-main relative overflow-hidden"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div className="absolute inset-0 bg-gradient-to-r from-[#5685CE] to-[#3c629d]"></div>
-        <div className="absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
-        <div className="absolute bottom-10 left-10 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
+        <motion.div
+          className="absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-xl"
+          variants={itemVariants}
+        ></motion.div>
+        <motion.div
+          className="absolute bottom-10 left-10 w-40 h-40 bg-white/10 rounded-full blur-xl"
+          variants={itemVariants}
+        ></motion.div>
 
         <div className="relative z-10 container mx-auto px-6 text-center text-white">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-6"
+            variants={itemVariants}
+          >
             Ready to Start Your Learning Journey?
-          </h2>
-          <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="text-xl mb-8 text-white/90 max-w-2xl mx-auto"
+            variants={itemVariants}
+          >
             Join thousands of students who have already transformed their lives
             through our innovative educational platform.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to={
-                token
-                  ? "/teachers"
-                  : "/login"
-              }
-            >
+          </motion.p>
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            variants={itemVariants}
+          >
+            <Link to={token ? "/teachers" : "/login"}>
               <Button
                 size="lg"
                 className="bg-white text-[#5685CE] hover:bg-white/90"
               >
                 <Icon
-                  icon={
-                    token
-                      ? "tabler:school"
-                      : "tabler:user-plus"
-                  }
+                  icon={token ? "tabler:school" : "tabler:user-plus"}
                   className="mr-2"
                 />
                 Get Started Today
@@ -308,9 +331,9 @@ const AboutUs = () => {
                 Contact Us
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       <Footer />
     </LayoutWithVerification>
