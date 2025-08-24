@@ -113,13 +113,13 @@ function TeacherVideo({ teacher }) {
           Introduction Video
         </motion.h2>
 
-        {teacher?.video_url ? (
+        {teacher?.video_link ? (
           <motion.div
             className="video-container relative"
             variants={itemVariants}
           >
             <iframe
-              src={convertToEmbedUrl(teacher.video_url)}
+              src={convertToEmbedUrl(teacher.video_link)}
               title="Teacher Introduction"
               className="w-full h-64 rounded-lg"
               frameBorder="0"
