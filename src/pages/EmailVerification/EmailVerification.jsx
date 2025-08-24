@@ -31,7 +31,7 @@ function EmailVerification() {
   const email = localStorage.getItem("to-verify-email") || "test@test.com";
   const navigate = useNavigate();
   const [isResending, setIsResending] = useState(false);
-  const user = JSON.parse(localStorage.getItem("yall_user_data")) || Cookies.get("yall_auth_token");
+  const user = JSON.parse(localStorage.getItem("yall_user_data")) && Cookies.get("yall_auth_token");
 
   const {
     handleSubmit,
@@ -52,7 +52,8 @@ function EmailVerification() {
     text: "Email verified successfully!",
     onSuccess: () => {
       if (user) {
-        navigate("/");
+        // navigate("/");
+        return;
       } else {
         navigate("/login");
       }
