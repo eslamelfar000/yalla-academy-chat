@@ -25,7 +25,15 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CheckIcon, CircleCheckIcon, Clock11Icon, Clock3, HourglassIcon, Icon } from "lucide-react";
+import {
+  AlertCircleIcon,
+  CheckIcon,
+  CircleCheckIcon,
+  Clock11Icon,
+  Clock3,
+  HourglassIcon,
+  Icon,
+} from "lucide-react";
 
 export function DataTable({ data, custom, isLoading, teacher_data }) {
   const [rowSelection, setRowSelection] = React.useState({});
@@ -73,7 +81,6 @@ export function DataTable({ data, custom, isLoading, teacher_data }) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
-
 
   return (
     <Card>
@@ -151,10 +158,26 @@ export function DataTable({ data, custom, isLoading, teacher_data }) {
                     </div>
                   </TableCell>
                   <TableCell className="border border-default-200">
-                    <span className="font-medium flex">{row?.original?.type ?? "Not Found"}</span>
+                    <span className="font-medium flex">
+                      {row?.original?.type ?? "Not Found"}
+                    </span>
                   </TableCell>
                   <TableCell className="border border-default-200 text-center">
-                    <span className="font-medium flex">{row?.original?.request ? <Clock3 className="size-8 text-yellow-500" />: <CircleCheckIcon className="size-8 text-green-500" />}</span>
+                    <span className="font-medium flex">
+                      {row.original?.timer ? (
+                        <div className="flex items-center gap-2">
+                          <AlertCircleIcon className="size-8 text-red-500" />
+                          <span>You Can Reserve This Session after </span>
+                          <span className="text-main">
+                            {row?.original?.timer}
+                          </span>
+                        </div>
+                      ) : row?.original?.request ? (
+                        <Clock3 className="size-8 text-yellow-500" />
+                      ) : (
+                        <CircleCheckIcon className="size-8 text-green-500" />
+                      )}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))
