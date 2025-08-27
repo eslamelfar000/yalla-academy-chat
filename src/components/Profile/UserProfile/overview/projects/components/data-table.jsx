@@ -165,12 +165,10 @@ export function DataTable({ data, custom, isLoading, teacher_data }) {
                   <TableCell className="border border-default-200 text-center">
                     <span className="font-medium flex">
                       {row.original?.timer ? (
-                        <div className="flex items-center gap-2">
-                          <AlertCircleIcon className="size-8 text-red-500" />
-                          <span>You Can Reserve This Session after </span>
-                          <span className="text-main">
-                            {row?.original?.timer}
-                          </span>
+                        <div className="flex items-center gap-2 text-main">
+                          <AlertCircleIcon className="size-8 text-main" />
+                          This session will be reopened to the public in a short
+                          time
                         </div>
                       ) : row?.original?.request ? (
                         <Clock3 className="size-8 text-yellow-500" />
