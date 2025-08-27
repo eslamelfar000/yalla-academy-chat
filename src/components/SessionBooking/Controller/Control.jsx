@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "../StepsButtons/BackButton";
 import NextButton from "../StepsButtons/NextButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,6 @@ function Control({ activeLoading, setShowModal }) {
       dispatch(updateBooking({ eventDate: [] })); // Dispatch immediately with correct data
     }
   }, [currentStep]);
-
 
   // console.log(booking);
 

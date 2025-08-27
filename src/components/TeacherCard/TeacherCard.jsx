@@ -90,10 +90,9 @@ function TeacherCard({ teacher }) {
                   </span>
                 )}
               </li>
-
               <li>
                 <span className="opacity-70">
-                  ({languages ? languages?.split(",").length : 0})
+                  ({languages && typeof languages === 'string' ? languages.split(",").length : 0})
                 </span>
               </li>
             </ul>
