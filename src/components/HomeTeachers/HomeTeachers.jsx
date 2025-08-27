@@ -8,7 +8,7 @@ import TeacherCardSkeleton from "../TeacherCard/TeacherCardSkeleton";
 
 function HomeTeachers({ teachers, isLoading }) {
   console.log("teachers", teachers);
-  const homeTeacher = teachers || Teachers || [];
+  const homeTeacher = teachers || [];
 
   // Animation variants
   const containerVariants = {
