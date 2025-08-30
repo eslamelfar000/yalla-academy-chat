@@ -197,14 +197,35 @@ function TeacherVideo({ teacher }) {
               transition: { duration: 0.2 },
             }}
           >
-            <Link
+            {/* <Link
               to={`/booking/${teacher?.id || teacher?.user_id}`}
               className="block"
-            >
-              <button className="btn bg-main text-white w-full hover:bg-main-dark rounded-md border-none shadow-none">
+            > */}
+              <button
+                onClick={() => {
+                  if (
+                    JSON.parse(localStorage.getItem("yall_user_data"))
+                       &&
+                    Cookies.get("yall_auth_token")
+                  ) {
+                    navigate(`/booking/${teacher?.id || teacher?.user_id}`);
+                  }else {
+                    toast.warning("Please login to book session with this teacher", {
+                      duration: 5000,
+                      action: {
+                        label: "Login",
+                        onClick: () => {
+                          navigate("/login");
+                        },
+                      },
+                    });
+                  }
+                }}
+                className="btn bg-main text-white w-full hover:bg-main-dark rounded-md border-none shadow-none"
+              >
                 Book Session Now
               </button>
-            </Link>
+            {/* </Link> */}
           </motion.div>
 
           <motion.div

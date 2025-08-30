@@ -63,6 +63,8 @@ export const useMutate = ({
 
       if (error?.response?.data?.message) {
         errorMessage = error.response.data.message;
+      } else if (error?.response?.status === 401) {
+        errorMessage = "Invalid Credentials";
       } else if (error?.response?.data?.msg) {
         errorMessage = error.response.data.msg;
       } else if (error?.response?.data) {

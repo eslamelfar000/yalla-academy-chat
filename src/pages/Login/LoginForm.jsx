@@ -57,6 +57,7 @@ function LoginForm() {
       // Use the new sync function to update user data
       syncUserData(data.data);
     },
+    
   });
 
   const onSubmit = (values) => {
@@ -90,7 +91,7 @@ function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem className="relative">
-                  <FormLabel>Password</FormLabel>
+                <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="password"
