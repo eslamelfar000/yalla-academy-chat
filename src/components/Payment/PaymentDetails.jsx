@@ -322,7 +322,8 @@ function PaymentDetails({ selectedPayment, payboxFile }) {
               ) : (
                 <>
                   Pay {booking?.totalPrice || booking?.price}{" "}
-                  {booking?.currency}
+                  {/* {booking?.currency} */}
+                  $
                 </>
               )}
             </Button>
