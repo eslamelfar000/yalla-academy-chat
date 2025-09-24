@@ -9,16 +9,11 @@ import Footer from "../../components/Footer/Footer";
 import LayoutWithVerification from "../../components/LayoutWithVerification/LayoutWithVerification";
 import { Link } from "react-router-dom";
 import useAuthToken from "@/hooks/use-auth-token";
+import YouTubeEmbed from "@/helper/YouTubeEmbed";
 
 const AboutUs = () => {
   const { getToken } = useAuthToken();
   const token = getToken();
-  const stats = [
-    { number: "500+", label: "Students Enrolled", icon: "tabler:users" },
-    { number: "50+", label: "Expert Teachers", icon: "tabler:graduation-cap" },
-    { number: "95%", label: "Success Rate", icon: "tabler:trophy" },
-    { number: "24/7", label: "Support Available", icon: "tabler:headphones" },
-  ];
 
   const values = [
     {
@@ -41,33 +36,6 @@ const AboutUs = () => {
       description:
         "We are committed to quality, accessibility, and building a supportive learning community.",
       color: "bg-green-50 border-green-200",
-    },
-  ];
-
-  const team = [
-    {
-      name: "Dr. Sarah Johnson",
-      role: "Founder & CEO",
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400",
-      description:
-        "Education expert with 15+ years of experience in online learning platforms.",
-    },
-    {
-      name: "Michael Chen",
-      role: "Head of Technology",
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
-      description:
-        "Tech innovator passionate about creating seamless learning experiences.",
-    },
-    {
-      name: "Emily Rodriguez",
-      role: "Lead Educator",
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400",
-      description:
-        "Dedicated teacher with expertise in modern pedagogical approaches.",
     },
   ];
 
@@ -152,6 +120,46 @@ const AboutUs = () => {
             We're on a mission to make quality education accessible to everyone,
             connecting students with expert teachers worldwide.
           </motion.p>
+        </div>
+      </motion.section>
+
+      {/* Intro Video Section */}
+      <motion.section
+        className="py-20 bg-white"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <div className="container mx-auto px-6">
+          <motion.div className="text-center mb-12" variants={itemVariants}>
+            <Badge className="bg-[#5685CE] text-white mb-4">Intro Video</Badge>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Get to Know Us in 90 Seconds
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Watch this short video to learn how we empower students and
+              connect them with expert teachers worldwide.
+            </p>
+          </motion.div>
+          <motion.div
+            className="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-lg"
+            variants={itemVariants}
+            whileHover={{ scale: 1.01 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Responsive 16:9 container */}
+            <div
+              className="relative w-full"
+              style={{ paddingBottom: "56.25%" }}
+            >
+              <YouTubeEmbed
+                url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                title="Teacher Introduction"
+                className="absolute top-0 left-0 w-full h-full"
+              />
+            </div>
+          </motion.div>
         </div>
       </motion.section>
 

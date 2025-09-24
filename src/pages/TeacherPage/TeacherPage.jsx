@@ -23,13 +23,6 @@ function TeacherPage() {
 
   // Handle error state
   if (error) {
-    console.error("TeacherPage Error Details:", {
-      message: error?.message,
-      response: error?.response?.data,
-      status: error?.response?.status,
-      url: error?.config?.url,
-    });
-
     return (
       <LayoutWithVerification>
         <Navbar />

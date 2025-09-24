@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { EyeIcon } from "lucide-react";
 import React from "react";
 import { motion } from "framer-motion";
+import YouTubeEmbed from "../../../helper/YouTubeEmbed";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -62,34 +63,6 @@ function TeacherVideo({ teacher }) {
     );
   }
 
-  // Function to convert YouTube URL to embed format
-  const convertToEmbedUrl = (url) => {
-    // If it's already an embed URL, return as is
-    if (url?.includes("youtube.com/embed/")) {
-      return url;
-    }
-
-    // Handle youtu.be links
-    if (url?.includes("youtu.be/")) {
-      const videoId = url?.split("youtu.be/")[1]?.split("?")[0];
-      if (videoId) {
-        return `https://www.youtube.com/embed/${videoId}`;
-      }
-    }
-
-    // Handle youtube.com/watch links
-    if (url?.includes("youtube.com/watch")) {
-      const urlParams = new URLSearchParams(url?.split("?")[1]);
-      const videoId = urlParams?.get("v");
-      if (videoId) {
-        return `https://www.youtube.com/embed/${videoId}`;
-      }
-    }
-
-    // If it's already an embed URL or can't be converted, return as is
-    return url;
-  };
-
   return (
     <motion.div
       className="cover"
@@ -118,14 +91,11 @@ function TeacherVideo({ teacher }) {
             className="video-container relative"
             variants={itemVariants}
           >
-            <iframe
-              src={convertToEmbedUrl(teacher.video_link)}
+            <YouTubeEmbed
+              url={teacher.video_link}
               title="Teacher Introduction"
               className="w-full h-64 rounded-lg"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            />
           </motion.div>
         ) : (
           <motion.div
@@ -201,16 +171,17 @@ function TeacherVideo({ teacher }) {
               to={`/booking/${teacher?.id || teacher?.user_id}`}
               className="block"
             > */}
-              <button
-                onClick={() => {
-                  if (
-                    JSON.parse(localStorage.getItem("yall_user_data"))
-                       &&
-                    Cookies.get("yall_auth_token")
-                  ) {
-                    navigate(`/booking/${teacher?.id || teacher?.user_id}`);
-                  }else {
-                    toast.warning("Please login to book session with this teacher", {
+            <button
+              onClick={() => {
+                if (
+                  JSON.parse(localStorage.getItem("yall_user_data")) &&
+                  Cookies.get("yall_auth_token")
+                ) {
+                  navigate(`/booking/${teacher?.id || teacher?.user_id}`);
+                } else {
+                  toast.warning(
+                    "Please login to book session with this teacher",
+                    {
                       duration: 5000,
                       action: {
                         label: "Login",
@@ -218,13 +189,14 @@ function TeacherVideo({ teacher }) {
                           navigate("/login");
                         },
                       },
-                    });
-                  }
-                }}
-                className="btn bg-main text-white w-full hover:bg-main-dark rounded-md border-none shadow-none"
-              >
-                Book Session Now
-              </button>
+                    }
+                  );
+                }
+              }}
+              className="btn bg-main text-white w-full hover:bg-main-dark rounded-md border-none shadow-none"
+            >
+              Book Session Now
+            </button>
             {/* </Link> */}
           </motion.div>
 

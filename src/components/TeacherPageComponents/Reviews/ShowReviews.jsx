@@ -1,5 +1,6 @@
 import React from "react";
 import Reviews from "./Reviews";
+import ReviewVideos from "./ReviewVideos/ReviewVideos";
 
 function ShowReviews({ teacher }) {
   console.log("ShowReviews - Teacher data:", teacher);
@@ -21,7 +22,6 @@ function ShowReviews({ teacher }) {
   // Ensure reviews is an array and handle different data structures
   const reviews = Array.isArray(teacher?.reviews) ? teacher.reviews : [];
 
-
   // Calculate average rating safely
   const averageRating =
     reviews.length > 0
@@ -32,14 +32,14 @@ function ShowReviews({ teacher }) {
       : 0;
 
   return (
-    <>
+    <div className="space-y-16">
       <div className="cover w-full">
         <div className="sec-head mb-5 w-full">
           <h1 className="text-xl font-bold flex items-center gap-2">
-           <span className="text-main">({reviews.length})</span> Reviews
+            <span className="text-main">({reviews.length})</span> Reviews
           </h1>
         </div>
-        <div className="cards w-full h-[500px] overflow-y-auto">
+        <div className="cards w-full max-h-[350px] overflow-y-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {reviews.length > 0 ? (
               reviews.map((review, index) => (
@@ -64,7 +64,23 @@ function ShowReviews({ teacher }) {
           </div>
         </div>
       </div>
-    </>
+
+      <div className="cover w-full">
+        <div className="sec-head mb-5 w-full">
+          <h1 className="text-xl font-bold flex items-center gap-2">
+            <span className="text-main">({reviews.length})</span>Students Review
+            Videos
+          </h1>
+        </div>
+        <div className="cards w-full max-h-[350px] overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <ReviewVideos key={index} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
