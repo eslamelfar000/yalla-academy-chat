@@ -6,7 +6,7 @@ const Table = React.forwardRef(({ className, wrapperClass, ...props }, ref) => (
   <div className={cn("overflow-x-auto", wrapperClass)}>
     <table
       ref={ref}
-      className={cn("w-full caption-top text-sm ", className)}
+      className={cn(`w-[150%] md:w-full caption-top text-sm `, className)}
       {...props}
     />
   </div>
