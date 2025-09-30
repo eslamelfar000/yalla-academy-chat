@@ -183,7 +183,7 @@ function SessionCalender({ loading, showModal, setShowModal, teacherId }) {
           slotDuration="01:00:00"
           slotLabelInterval="01:00:00"
           slotMinTime="09:00:00"
-          slotMaxTime="21:00:00"
+          slotMaxTime="26:00:00"
           slotLabelFormat={{ hour: "2-digit", minute: "2-digit" }}
           validRange={{ start: new Date() }}
           views={{ timeGridWeek: { type: "timeGrid", duration: { days: 7 } } }}
