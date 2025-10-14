@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
 
 // Import Swiper styles
 import "swiper/css";
@@ -19,9 +21,11 @@ function Carousel({ data, isLoading }) {
         <Swiper
           spaceBetween={30}
           //   loop={true}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
           className="mySwiper user-select-none"
           onSwiper={setSwiperInstance}
           onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+          modules={[Autoplay]}
         >
           {isLoading ? (
             Array.from({ length: 3 }).map((_, index) => (

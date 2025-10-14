@@ -50,7 +50,7 @@ function Hero() {
   return (
     <>
       <motion.div
-        className="hero min-h-[calc(100vh-15rem)] py-20 lg:py-0 sm:px-5 lg:px-20 xl:px-0 bg-main-light"
+        className="hero pt-20 pb-60 sm:px-5 lg:px-20 xl:px-0 bg-gradient-to-b from-main-light to-white bg-main-light"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"

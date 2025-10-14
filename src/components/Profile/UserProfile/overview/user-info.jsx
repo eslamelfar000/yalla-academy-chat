@@ -87,29 +87,29 @@ const UserInfo = ({ user_data, isLoading }) => {
             </div>
 
             <div className="">
-              <CardTitle className="text-lg font-medium text-default-800 opacity-80">
+              <CardTitle className="text-lg font-medium text-default-800 opacity-80 mb-6">
                 Assigned Teacher
               </CardTitle>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center flex-wrap gap-4 bg-main-light p-4 rounded-lg">
                 <div className="flex items-center gap-4">
                   <div>
                     <img
                       src={user_data?.assiend_teacher?.image}
                       alt="user"
-                      className="h-10 w-10 rounded-full"
+                      className="h-14 w-14 rounded-full"
                     />
                   </div>
                   <div>
-                    <div className="text-xl lg:text-xl font-semibold text-main">
+                    <div className="text-xl lg:text-xl font-semibold">
                       {user_data?.assiend_teacher?.name}
                     </div>
-                    <div className="text-xs lg:text-sm font-small text-gray-400">
+                    <div className="text-xs lg:text-sm font-small text-gray-700">
                       {user_data?.assiend_teacher?.role}
                     </div>
                   </div>
                 </div>
 
-                <div className="icons flex items-center gap-2 select-none">
+                <div className="icons flex items-center w-full sm:w-auto justify-center gap-2 select-none">
                   <div className="icon">
                     <a
                       href={
@@ -118,6 +118,7 @@ const UserInfo = ({ user_data, isLoading }) => {
                       }
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="hover:brightness-80 transition duration-300 select-none"
                     >
                       <img src={zoom} alt="zoom" className="size-17" />
                     </a>
@@ -126,7 +127,7 @@ const UserInfo = ({ user_data, isLoading }) => {
                     <Button
                       variant="outline"
                       color="main"
-                      className="hover:bg-main hover:text-white cursor-pointer flex items-center gap-2"
+                      className="bg-main border-main hover:bg-main-dark cursor-pointer text-white flex items-center gap-2"
                     >
                       <IoChatbubblesOutline className="size-6" />
                       <span className="font-medium text-md transition duration-300 select-none">
