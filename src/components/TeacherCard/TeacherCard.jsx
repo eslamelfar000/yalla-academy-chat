@@ -20,6 +20,7 @@ function TeacherCard({ teacher }) {
     id,
     package_before_price,
     reviews,
+    is_full,
   } = teacher;
 
   // console.log("teacher", teacher);
@@ -41,6 +42,17 @@ function TeacherCard({ teacher }) {
             transition={{ delay: 0.3, duration: 0.5 }}
           >
             New
+          </motion.div>
+        )}
+        {is_full && (
+          <motion.div
+            className="new-tag absolute rotate-40 top-3 -right-10 bg-green-600 text-white text-sm font-[500] px-15 py-1 shadow-xl"
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            Full
           </motion.div>
         )}
         <figure>
@@ -92,7 +104,11 @@ function TeacherCard({ teacher }) {
               </li>
               <li>
                 <span className="opacity-70">
-                  ({languages && typeof languages === 'string' ? languages.split(",").length : 0})
+                  (
+                  {languages && typeof languages === "string"
+                    ? languages.split(",").length
+                    : 0}
+                  )
                 </span>
               </li>
             </ul>
