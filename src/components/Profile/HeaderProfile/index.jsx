@@ -28,7 +28,7 @@ const Header = () => {
     >
       {/* <ThemeButton /> */}
       {/* <Inbox /> */}
-      {/* <NotificationMessage /> */}
+      <NotificationMessage />
       <ProfileInfo user_data={user_data} />
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { MdNotificationsActive } from "react-icons/md";
 import { ThreeCircles } from "react-loader-spinner";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 
 function AlertModal({ show, note, setShow, loading }) {
@@ -30,23 +31,25 @@ function AlertModal({ show, note, setShow, loading }) {
           />
         </div>
       ) : (
-        <div className="modal-box">
+      <div className="modal-box">
           <div>
             <div className="item flex gap-3 items-center">
               <figure className="font-bold rounded-full border-2 border-main p-1">
-                <img
-                  src={note?.notification?.avatar ?? ""}
-                  alt={note?.notification?.avatar ?? ""}
-                  className="size-15 rounded-full"
-                />
+                <Avatar>
+                  <AvatarImage
+                    src={"/yallalogo.png"}
+                    alt={"logo-image"}
+                    className="size-12 object-contain rounded-full"
+                  />
+                </Avatar>
               </figure>
 
               <div className="">
-                <h2 className="font-bold text-lg text-main">
-                  {note?.notification?.fullName}
+                <h2 className="font-semibold text-lg text-main">
+                  {"Yall Academy"}
                 </h2>
-                <p className="text-sm font-normal">
-                  {note?.notification?.role}
+                <p className="text-sm font-normal text-gray-500">
+                  {"From Yall Academy Administration"}
                 </p>
               </div>
             </div>
@@ -57,9 +60,14 @@ function AlertModal({ show, note, setShow, loading }) {
           </div>
 
           <div className="message my-10 flex gap-3 items-end">
-            <p className="text-md font-normal opacity-80">
-              {note?.notification?.message}
-            </p>
+            <div className="flex flex-col gap-2 border-2 border-main p-4 rounded-lg w-full">
+              <h3 className="text-lg font-semibold text-main">
+                {note?.notification?.title || note?.notification?.body || note?.notification?.content || note?.notification?.title}
+              </h3>
+              <p className="text-sm font-normal text-gray-500">
+                {note?.notification?.message || note?.notification?.body || note?.notification?.content || note?.notification?.title}
+              </p>
+            </div>
           </div>
 
           <div className="modal-action">

@@ -20,6 +20,7 @@ export const SettingsProvider = ({ children }) => {
     error,
     banner: settingsData?.data || {},
     contact: settingsData?.data || {},
+    about_us: settingsData?.data || {},
   };
 
   return (

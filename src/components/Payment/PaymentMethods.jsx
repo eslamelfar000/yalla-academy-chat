@@ -12,6 +12,7 @@ import visa from "../../assets/visa.svg";
 import mastercard from "../../assets/mastercard.svg";
 import { CircleAlertIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useSettings } from "@/context/SettingsContext";
 
 function PaymentMethods({
   handleSelect,
@@ -20,9 +21,13 @@ function PaymentMethods({
   setPayboxFile,
   payboxFile,
 }) {
+  const { settings } = useSettings();
   const [open, setOpen] = useState(false);
   const [cards, setCards] = useState([]);
   const [payboxFileError, setPayboxFileError] = useState("");
+
+  // Extract paybox number from settings
+  const payboxNumber = settings?.paybox_number || "+972 54-648-7767";
 
   useEffect(() => {
     if (selected === "paybox") {
@@ -228,7 +233,7 @@ function PaymentMethods({
                     <PiNumberCircleOneThin className="size-8 lg:size-6 text-main" />
                     <p>
                       Transfer Money to this phone number :{" "}
-                      <strong className="text-main">+972 54-648-7767</strong>
+                      <strong className="text-main">{payboxNumber}</strong>
                     </p>
                   </li>
                   <li className="flex items-center gap-2">

@@ -10,10 +10,54 @@ import LayoutWithVerification from "../../components/LayoutWithVerification/Layo
 import { Link } from "react-router-dom";
 import useAuthToken from "@/hooks/use-auth-token";
 import YouTubeEmbed from "@/helper/YouTubeEmbed";
+import { useSettings } from "@/context/SettingsContext";
+import AboutUsSkeleton from "../../components/AboutUs/AboutUsSkeleton";
 
 const AboutUs = () => {
   const { getToken } = useAuthToken();
   const token = getToken();
+
+  const { settings, isLoading, error } = useSettings();
+
+  // Extract about us data from settings
+  const aboutUsTitle = settings?.about_us_title || "Empowering Students";
+  const aboutUsSubtitle =
+    settings?.about_us_subtitle || "Through Quality Education";
+  const aboutUsDescription =
+    settings?.about_us_description ||
+    "We're on a mission to make quality education accessible to everyone, connecting students with expert teachers worldwide.";
+  const aboutUsVideo = settings?.about_us_video;
+
+  // Show loading skeleton while fetching data
+  if (isLoading) {
+    return (
+      <LayoutWithVerification>
+        <Navbar />
+        <AboutUsSkeleton />
+        <Footer />
+      </LayoutWithVerification>
+    );
+  }
+
+  // Show error state if there's an error
+  if (error) {
+    return (
+      <LayoutWithVerification>
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold text-red-600 mb-4">
+              Error Loading About Us Information
+            </h2>
+            <p className="text-gray-600">
+              Failed to load about us details. Please try again later.
+            </p>
+          </div>
+        </div>
+        <Footer />
+      </LayoutWithVerification>
+    );
+  }
 
   const values = [
     {
@@ -108,17 +152,16 @@ const AboutUs = () => {
             className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
             variants={itemVariants}
           >
-            Empowering Students
+            {aboutUsTitle}
             <span className="block text-4xl md:text-5xl font-light mt-2">
-              Through Quality Education
+              {aboutUsSubtitle}
             </span>
           </motion.h1>
           <motion.p
             className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto"
             variants={itemVariants}
           >
-            We're on a mission to make quality education accessible to everyone,
-            connecting students with expert teachers worldwide.
+            {aboutUsDescription}
           </motion.p>
         </div>
       </motion.section>
@@ -153,11 +196,21 @@ const AboutUs = () => {
               className="relative w-full"
               style={{ paddingBottom: "56.25%" }}
             >
-              <YouTubeEmbed
-                url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                title="Teacher Introduction"
-                className="absolute top-0 left-0 w-full h-full"
-              />
+              {aboutUsVideo ? (
+                <YouTubeEmbed
+                  url={aboutUsVideo}
+                  title="About Us Video"
+                  className="absolute top-0 left-0 w-full h-full"
+                />
+              ) : (
+                <div className="absolute top-0 left-0 w-full h-full bg-gray-200 flex flex-col items-center justify-center">
+                  <Icon icon="tabler:video" className="text-4xl mb-4" />
+                  <h3 className="text-2xl font-bold mb-4">No Video Available</h3>
+                  <p className="text-gray-700">
+                    We are working on adding a video to our about us page.
+                  </p>
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
