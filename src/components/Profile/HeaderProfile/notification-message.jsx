@@ -18,8 +18,8 @@ import { BellAlertIcon } from "@heroicons/react/16/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotification } from "@/Store/Reducer/notificationSlice";
 import AlertModal from "@/components/AlertModal/AlertModal";
-import { useState, useEffect } from "react";
-import { api } from "@/config/axios.config";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { useGetData } from "@/hooks/useGetData";
 
 // Notification Skeleton Component
 const NotificationSkeleton = ({ count = 5 }) => {
@@ -47,45 +47,111 @@ const NotificationSkeleton = ({ count = 5 }) => {
 const NotificationMessage = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [notifications, setNotifications] = useState([]);
-  const [isLoadingNotifications, setIsLoadingNotifications] = useState(true);
-  const [unreadCount, setUnreadCount] = useState(0);
   const dispatch = useDispatch();
   const { notification } = useSelector((state) => state.notification);
 
-  // Fetch notifications from API
-  useEffect(() => {
-    const fetchNotifications = async () => {
+  // Initialize local read notifications from localStorage
+  const [localReadNotifications, setLocalReadNotifications] = useState(() => {
+    // Initialize from localStorage
+    if (typeof window !== "undefined") {
       try {
-        setIsLoadingNotifications(true);
-        const response = await api.get("/notifications");
-
-        // Handle different response structures
-        const notificationsData = response.data?.data || response.data || [];
-        setNotifications(notificationsData);
-
-        // Calculate unread count (unreadmessage > 0 means unread)
-        const unread = notificationsData.filter(
-          (notif) =>
-            notif.unreadmessage > 0 ||
-            notif.is_read === false ||
-            notif.read === false
-        ).length;
-        setUnreadCount(unread);
+        const stored = localStorage.getItem("readNotifications");
+        return stored ? JSON.parse(stored) : [];
       } catch (error) {
-        console.error("Error fetching notifications:", error);
-        setNotifications([]);
-        setUnreadCount(0);
-      } finally {
-        setIsLoadingNotifications(false);
+        console.error("Error reading local read notifications:", error);
+        return [];
       }
-    };
+    }
+    return [];
+  });
 
-    fetchNotifications();
+  // Fetch notifications from API
+  const {
+    data,
+    isLoading: isLoadingNotifications,
+    isError,
+  } = useGetData({
+    endpoint: "/notifications",
+    queryKey: ["notifications"],
+    enabledKey: true,
+  });
+
+  // Extract notifications from response (adjust based on your API structure)
+  const notifications = useMemo(() => {
+    if (!data) return [];
+    // Handle different possible response structures
+    if (Array.isArray(data)) return data;
+    if (data?.data && Array.isArray(data.data)) return data.data;
+    if (data?.notifications && Array.isArray(data.notifications))
+      return data.notifications;
+    return [];
+  }, [data]);
+
+  // Save local read notifications to localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(
+          "readNotifications",
+          JSON.stringify(localReadNotifications)
+        );
+      } catch (error) {
+        console.error("Error saving local read notifications:", error);
+      }
+    }
+  }, [localReadNotifications]);
+
+  // Mark notification as read locally
+  const markAsRead = useCallback((notificationId) => {
+    if (!notificationId) return;
+    setLocalReadNotifications((prev) => {
+      if (!prev.includes(notificationId)) {
+        return [...prev, notificationId];
+      }
+      return prev;
+    });
   }, []);
 
+  // Mark all notifications as read when dropdown opens
+  const handleDropdownOpenChange = useCallback(
+    (open) => {
+      if (open) {
+        // When dropdown opens, mark all notifications as read
+        const allNotificationIds = notifications
+          .map((item) => item?.id)
+          .filter(Boolean);
+        if (allNotificationIds.length > 0) {
+          setLocalReadNotifications((prev) => {
+            const newRead = [...prev];
+            allNotificationIds.forEach((id) => {
+              if (!newRead.includes(id)) {
+                newRead.push(id);
+              }
+            });
+            return newRead;
+          });
+        }
+      }
+    },
+    [notifications]
+  );
+
+  // Check if notification is unread (local only)
+  const isUnread = useCallback(
+    (item) => {
+      if (!item || !item.id) return false;
+      return !localReadNotifications.includes(item.id);
+    },
+    [localReadNotifications]
+  );
+
+  // Calculate unread count (local only)
+  const unreadCount = useMemo(() => {
+    return notifications.filter((item) => isUnread(item)).length || 0;
+  }, [notifications, isUnread]);
+
   return (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={handleDropdownOpenChange}>
       <AlertModal
         show={show}
         setShow={setShow}
@@ -129,57 +195,59 @@ const NotificationMessage = () => {
                 No notifications available
               </div>
             ) : (
-              notifications.map((item, index) => (
-                <DropdownMenuItem
-                  key={item.id || `inbox-${index}`}
-                  className="flex gap-9 py-2 px-4 cursor-pointer hover:bg-second"
-                  onClick={() => {
-                    dispatch(
-                      setNotification({
-                        notification: item,
-                      })
-                    );
-                    setShow(true);
-                    setLoading(true);
+              notifications.map((item, index) => {
+                const unread = isUnread(item);
+                return (
+                  <DropdownMenuItem
+                    key={item.id || `inbox-${index}`}
+                    className="flex gap-9 py-2 px-4 cursor-pointer hover:bg-second"
+                    onClick={() => {
+                      // Mark as read when clicked
+                      if (item.id) {
+                        markAsRead(item.id);
+                      }
+                      dispatch(
+                        setNotification({
+                          notification: item,
+                        })
+                      );
+                      setShow(true);
+                      setLoading(true);
 
-                    setTimeout(() => {
-                      setLoading(false);
-                    }, 1000);
-                  }}
-                >
-                  <div className="flex-1 flex items-center gap-2">
-                    <Avatar className="h-10 w-10 rounded-full border-2 border-main p-1">
-                      <AvatarImage src={'/yallalogo.png'} />
-                    </Avatar>
-                    <div className="opacity-80">
-                      <div className="text-sm font-medium text-default-900 mb-[2px] whitespace-nowrap">
-                        {item.title ||
-                          "Notification"}
-                      </div>
-                      <div className="text-xs text-default-900 truncate max-w-[100px] lg:max-w-[185px]">
-                        {item.message || item.body || item.content || ""}
+                      setTimeout(() => {
+                        setLoading(false);
+                      }, 1000);
+                    }}
+                  >
+                    <div className="flex-1 flex items-center gap-2">
+                      <Avatar className="h-10 w-10 rounded-full border-2 border-main p-1">
+                        <AvatarImage src={"/yallalogo.png"} />
+                      </Avatar>
+                      <div className="opacity-80">
+                        <div className="text-sm font-medium text-default-900 mb-[2px] whitespace-nowrap">
+                          {item.title || "Notification"}
+                        </div>
+                        <div className="text-xs text-default-900 truncate max-w-[100px] lg:max-w-[185px]">
+                          {item.message || item.body || item.content || ""}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    className={cn(
-                      "text-xs font-medium text-default-900 whitespace-nowrap opacity-60",
-                      {
-                        "text-main opacity-100":
-                          !item.unreadmessage || item.unreadmessage === 0,
-                      }
+                    <div
+                      className={cn(
+                        "text-xs font-medium text-default-900 whitespace-nowrap opacity-60",
+                        {
+                          "text-main opacity-100": !unread,
+                        }
+                      )}
+                    >
+                      {item.date || item.created_at || item.time || ""}
+                    </div>
+                    {unread && (
+                      <div className="w-2 h-2 rounded-full mr-2 bg-main"></div>
                     )}
-                  >
-                    {item.date || item.created_at || item.time || ""}
-                  </div>
-                  <div
-                    className={cn("w-2 h-2 rounded-full mr-2", {
-                      "bg-main":
-                        !item.unreadmessage || item.unreadmessage === 0,
-                    })}
-                  ></div>
-                </DropdownMenuItem>
-              ))
+                  </DropdownMenuItem>
+                );
+              })
             )}
           </ScrollArea>
         </div>
