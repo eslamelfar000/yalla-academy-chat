@@ -188,7 +188,9 @@ function NextButton({ block, activeLoading, setShowModal }) {
     sessionMutation.mutate(bookingData);
   };
 
-  const handleNextStep = () => {
+  const handleNextStep = (e) => {
+    e?.preventDefault(); // Prevent any default form submission behavior
+    
     if (currentStep === "bookingType") {
       dispatch(setStep("sessionCalendar"));
     } else if (currentStep === "sessionCalendar") {
@@ -196,6 +198,10 @@ function NextButton({ block, activeLoading, setShowModal }) {
         // For free trial, book directly
         handleSessionBooking();
       } else {
+        // Ensure booking data is saved to localStorage before navigation
+        if (booking && Object.keys(booking).length > 0) {
+          localStorage.setItem('booking_data', JSON.stringify(booking));
+        }
         // For paid sessions (including pay after), go to payment page
         navigate("/payment");
       }
@@ -205,6 +211,7 @@ function NextButton({ block, activeLoading, setShowModal }) {
   return (
     <>
       <button
+        type="button"
         disabled={block}
         className={`btn text-white font-[600] bg-main py-2 px-5 rounded-xl shadow-none border-2 ${
           (booking?.eventDate?.length !== 0 &&

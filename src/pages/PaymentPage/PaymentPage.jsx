@@ -19,16 +19,32 @@ function PaymentPage() {
     const timer = setTimeout(() => {
       // Don't redirect if we're on success page or if we have valid booking data
       const isSuccessPage = window.location.pathname === "/success";
+
+      // Check both Redux state and localStorage for booking data
+      const savedBooking = localStorage.getItem("booking_data");
+      let parsedBooking = null;
+      if (savedBooking) {
+        try {
+          parsedBooking = JSON.parse(savedBooking);
+        } catch (e) {
+          // Ignore parse errors
+        }
+      }
+
       const hasValidBooking =
-        booking?.teacherId &&
-        booking?.eventDate &&
-        booking?.eventDate?.length > 0;
+        (booking?.teacherId &&
+          booking?.eventDate &&
+          booking?.eventDate?.length > 0) ||
+        (parsedBooking?.teacherId &&
+          parsedBooking?.eventDate &&
+          parsedBooking?.eventDate?.length > 0);
 
       if (!hasValidBooking && !isSuccessPage) {
         navigate("/booking/" + (teacherId || "1"), { replace: true });
+      } else {
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    }, 500);
+    }, 300); // Reduced delay slightly
 
     return () => clearTimeout(timer);
   }, [booking, navigate, teacherId]);
