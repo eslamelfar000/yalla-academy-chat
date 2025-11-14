@@ -24,9 +24,9 @@ function BookingType() {
     );
   }, [selected]);
 
-  // Set default trail selection when teacher data loads
+  // Set default trail selection when teacher data loads (only if user hasn't used trial)
   useEffect(() => {
-    if (teacherData && !isLoading) {
+    if (teacherData && !isLoading && !currentUserData?.has_trail_session) {
       setSelected("free"); // Set visual selection
       dispatch(
         updateBooking({
@@ -40,8 +40,23 @@ function BookingType() {
           type: "trail",
         })
       );
+    } else if (teacherData && !isLoading && currentUserData?.has_trail_session) {
+      // If user has used trial, set default to "before" option
+      setSelected("before");
+      dispatch(
+        updateBooking({
+          bookingType: "before",
+          name: "Pay Before Sessions",
+          price: teacherData?.package_before_price,
+          totalPrice: teacherData?.package_before_price,
+          lessons: 1,
+          teacherId: id,
+          teacherName: teacherData?.name,
+          type: "paybefore",
+        })
+      );
     }
-  }, [teacherData, isLoading, id, dispatch]);
+  }, [teacherData, isLoading, id, dispatch, currentUserData?.has_trail_session]);
 
   // Show loading state while fetching teacher data
   if (isLoading) {

@@ -88,7 +88,7 @@ function TeacherInfo({ teacher }) {
 
           {activeTab === "about-me" ? (
             <div className="about-me">
-              <p className="opacity-60 text-md">
+              <div className="opacity-60 text-md">
                 <div
                   className="prose prose-sm md:prose-base lg:prose-md max-w-none 
                     prose-p:my-2 prose-headings:font-bold
@@ -113,7 +113,7 @@ function TeacherInfo({ teacher }) {
                         : "No information provided",
                   }}
                 />
-              </p>
+              </div>
               <button
                 onClick={() => setMore(!more)}
                 className="btn p-0 shadow-none text-main-light bg-white hover:bg-white border-none font-[400] opacity-90 cursor-pointer"
@@ -123,7 +123,7 @@ function TeacherInfo({ teacher }) {
             </div>
           ) : (
             <div className="about-course">
-              <p className="opacity-60 text-md">
+              <div className="opacity-60 text-md">
                 <div
                   className="prose prose-sm md:prose-base lg:prose-md max-w-none 
                     prose-p:my-2 prose-headings:font-bold
@@ -149,7 +149,7 @@ function TeacherInfo({ teacher }) {
                         : "No information provided",
                   }}
                 />
-              </p>
+              </div>
               <button
                 onClick={() => setMore(!more)}
                 className="btn p-0 shadow-none text-main-light bg-white hover:bg-white border-none font-[400] opacity-90 cursor-pointer"

@@ -15,6 +15,7 @@ export const useLogout = () => {
     text: "Logged out successfully!",
     onSuccess: () => {
       handleLogout();
+      sessionStorage.removeItem('trialDialogShown');
     },
     onError: () => {
       // Even if API fails, still logout locally

@@ -18,12 +18,8 @@ const HandleCalendarShow = ({
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener("resize", handleResize);
 
-    setTimeout(() => {
-      dispatch(updateBooking({ eventDate: [] }));
-    }, 0);
-
     return () => window.removeEventListener("resize", handleResize);
-  }, [isMobile]);
+  }, []);
 
   return (
     <>

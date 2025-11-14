@@ -7,6 +7,7 @@ import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import { useMutate } from "../../../hooks/UseMutate";
 import { clearBooking } from "../../../Store/Reducer/bookingSlice";
 import { useBookingPersistence } from "../../../hooks/useBookingPersistence";
+import { ExclamationTriangleIcon } from "@heroicons/react/16/solid";
 
 function NextButton({ block, activeLoading, setShowModal }) {
   const dispatch = useDispatch();
@@ -29,13 +30,13 @@ function NextButton({ block, activeLoading, setShowModal }) {
         // Redirect to PayPal payment link
         window.open(data.data.payment_link, "_blank");
 
-        toast.success("Redirecting to PayPal payment...", {
+        toast.warning("Redirecting to PayPal payment...", {
           description: "Please complete your payment in the new window.",
           duration: 5000,
           style: {
             gap: "1rem",
           },
-          icon: <CheckBadgeIcon className="size-8 text-green-500" />,
+          icon: <ExclamationTriangleIcon className="size-8 text-yellow-500" />,
           action: {
             label: "close",
           },
@@ -66,9 +67,6 @@ function NextButton({ block, activeLoading, setShowModal }) {
       // Reset step to bookingType
       dispatch(setStep("bookingType"));
 
-      // Navigate to success page with replace to prevent back navigation
-      navigate("/success", { replace: true });
-
       // Different toast messages based on booking type
       if (booking.type === "payafter") {
         toast.success("Your booking request is sent.", {
@@ -83,9 +81,28 @@ function NextButton({ block, activeLoading, setShowModal }) {
             label: "close",
           },
         });
+        // Navigate to success page with replace to prevent back navigation
+        navigate("/success", { replace: true });
+      } else if (booking.type === "trail") {
+        // For trial bookings, show success message and refresh the page
+        toast.success("Your trial session booking is confirmed.", {
+          description: "Your trial session has been successfully booked.",
+          duration: 3000,
+          style: {
+            gap: "1rem",
+          },
+          icon: <CheckBadgeIcon className="size-8 text-green-500" />,
+          action: {
+            label: "close",
+          },
+        });
+        // Refresh the page after a short delay to show the toast
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
-        toast.success("Your booking request is sent.", {
-          description: "Note! your booking will be confirmed after 24h.",
+        toast.success("Your trial session booking is confirmed.", {
+          description: "Your trial session has been successfully booked.",
           duration: 15000,
           style: {
             gap: "1rem",
@@ -95,28 +112,45 @@ function NextButton({ block, activeLoading, setShowModal }) {
             label: "close",
           },
         });
+        // Navigate to success page with replace to prevent back navigation
+        navigate("/success", { replace: true });
       }
     },
     onError: (error) => {
       activeLoading(false);
       // Handle validation errors specifically
-      // if (error?.response?.data?.data) {
-      //   const validationErrors = error.response.data.data;
-      //   Object.keys(validationErrors).forEach((field) => {
-      //     validationErrors[field].forEach((message) => {
-      //       toast.error(message, {
-      //         duration: 5000,
-      //         action: { label: "close" },
-      //       });
-      //     });
-      //   });
-      // }
+      if (error?.response?.data?.data) {
+        const validationErrors = error.response.data.data;
+        Object.keys(validationErrors).forEach((field) => {
+          validationErrors[field].forEach((message) => {
+            toast.error(message, {
+              duration: 5000,
+              action: { label: "close" },
+            });
+          });
+        });
+      } else if (error?.response?.data?.message) {
+        toast.error(error.response.data.message, {
+          duration: 5000,
+          action: { label: "close" },
+        });
+      } else {
+        toast.error("Failed to book session. Please try again.", {
+          duration: 5000,
+          action: { label: "close" },
+        });
+      }
     },
   });
 
   const handleSessionBooking = () => {
     if (!booking.teacherId) {
       toast.error("Teacher ID is required");
+      return;
+    }
+
+    if (!booking.type) {
+      toast.error("Booking type is required. Please select a booking type.");
       return;
     }
 
@@ -132,6 +166,11 @@ function NextButton({ block, activeLoading, setShowModal }) {
 
     // Prepare session IDs from selected events
     const sessionIds = booking.eventDate.map((event) => event.id);
+
+    if (!sessionIds || sessionIds.length === 0) {
+      toast.error("Invalid session selection. Please try again.");
+      return;
+    }
 
     const bookingData = {
       teacher_id: booking.teacherId,

@@ -16,9 +16,8 @@ function SessionCalender({ loading, showModal, setShowModal, teacherId }) {
   const dispatch = useDispatch();
   const lessonNumber =
     useSelector((state) => state.booking.booking.lessons) || 0;
-  const [selectedBooking, setSelectedBooking] = useState([]);
-
-  console.log("Teacher ID:", setSelectedBooking);
+  const existingEventDate = useSelector((state) => state.booking.booking.eventDate) || [];
+  const [selectedBooking, setSelectedBooking] = useState(existingEventDate);
 
   // Fetch available sessions
   const {

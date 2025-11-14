@@ -13,8 +13,17 @@ import LoaderPage from "../../LoaderPage/LoaderPage";
 function ResponsiveCalendar({ loading, showModal, setShowModal, teacherId }) {
   const dispatch = useDispatch(); // Initialize dispatch for Redux actions
   const [selectedDay, setSelectedDay] = useState(new Date());
-  const [selectedEvents, setSelectedEvents] = useState([]);
+  const existingEventDate = useSelector((state) => state.booking.booking.eventDate) || [];
+  const [selectedEvents, setSelectedEvents] = useState(existingEventDate);
   const lessonNumber = useSelector((state) => state.booking.booking.lessons); // Get lesson number from Redux store
+
+  // Sync selectedEvents with Redux when component remounts or existingEventDate changes externally
+  useEffect(() => {
+    // Only sync if Redux has data and local state is empty, or if they're out of sync
+    if (existingEventDate && existingEventDate.length > 0 && selectedEvents.length === 0) {
+      setSelectedEvents(existingEventDate);
+    }
+  }, [existingEventDate]); // Sync when Redux value changes
 
   // Fetch available sessions
   const {
@@ -49,9 +58,17 @@ function ResponsiveCalendar({ loading, showModal, setShowModal, teacherId }) {
     }
   };
 
+  // Initialize selectedEvents from Redux store when component mounts
+  useEffect(() => {
+    if (existingEventDate && existingEventDate.length > 0) {
+      setSelectedEvents(existingEventDate);
+    }
+  }, []); // Only run on mount
+
   const handleDeleteMobileEvent = (eventId) => {
-    setSelectedEvents(selectedEvents.filter((e) => e.id !== eventId));
-    dispatch(updateBooking({ eventDate: selectedEvents }));
+    const updatedEvents = selectedEvents.filter((e) => e.id !== eventId);
+    setSelectedEvents(updatedEvents);
+    dispatch(updateBooking({ eventDate: updatedEvents }));
   };
 
   const handleSelectEvent = (event) => {

@@ -21,10 +21,14 @@ function Home() {
   const { userData, isAuthenticated } = useUserDataContext();
   const [showTrialDialog, setShowTrialDialog] = useState(false);
 
-  console.log(userData?.has_trail_session);
-
   // Check for trial session availability after page loads
   useEffect(() => {
+    const hasShownDialog = sessionStorage.getItem('trialDialogShown');
+    
+    if (hasShownDialog) {
+      return;
+    }
+
     const timer = setTimeout(() => {
       // Check if user has trial session available
       if (isAuthenticated) {
@@ -32,14 +36,16 @@ function Home() {
           return;
         } else {
           setShowTrialDialog(true);
+          sessionStorage.setItem('trialDialogShown', 'true');
         }
       }else{
         setShowTrialDialog(true);
+        // sessionStorage.setItem('trialDialogShown', 'true');
       }
     }, 2000); // Show dialog after 2 seconds of page load
 
     return () => clearTimeout(timer);
-  }, [userData]);
+  }, [userData, isAuthenticated]);
 
   const handleCloseTrialDialog = () => {
     setShowTrialDialog(false);

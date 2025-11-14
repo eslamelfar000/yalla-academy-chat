@@ -1,15 +1,17 @@
 import YouTubeEmbed from "@/helper/YouTubeEmbed";
-import { Rating } from "@smastrom/react-rating";
 import React from "react";
 
-function ReviewVideos({ name, rating, img }) {
+function ReviewVideos({ url, title }) {
   return (
     <div className="cover">
-      <div className="item bg-second p-5 rounded-md">
+      <div className="item bg-second p-5 rounded-md shadow-lg">
+        <div className="top border-b border-gray-200 pb-5">
+          <h2 className="text-md font-bold">{title}</h2>
+        </div>
         <div className="bottom">
           <YouTubeEmbed
-            url={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
-            title="Teacher Introduction"
+            url={url}
+            title={title}
             className="w-full h-64 rounded-lg"
           />
         </div>

@@ -55,7 +55,7 @@ const PersonalDetails = ({ user_data, previewPublicImage }) => {
       name: user_data?.name || "",
       phone: user_data?.phone || "",
       email: user_data?.email || "",
-      language: user_data?.language || "arabic",
+      // language: user_data?.language || "arabic",
       location: user_data?.location || "Egypt",
     },
   });
@@ -149,7 +149,7 @@ const PersonalDetails = ({ user_data, previewPublicImage }) => {
               </div>
 
               {/* Language */}
-              <div className="col-span-12 md:col-span-6">
+              {/* <div className="col-span-12 md:col-span-6">
                 <FormField
                   control={form.control}
                   name="language"
@@ -177,7 +177,7 @@ const PersonalDetails = ({ user_data, previewPublicImage }) => {
                     </FormItem>
                   )}
                 />
-              </div>
+              </div> */}
 
               {/* Country */}
               <div className="col-span-12 lg:col-span-6">

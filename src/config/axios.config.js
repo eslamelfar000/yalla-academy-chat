@@ -68,16 +68,10 @@ api.interceptors.request.use(
 // Add response interceptor to handle 401 errors
 api.interceptors.response.use(
   (response) => {
-    console.log("Response received:", response.status, response.config.url);
     return response;
   },
   (error) => {
-    console.error("Response error:", error.response?.status, error.response?.data);
     if (error.response?.status === 401) {
-      // Handle unauthorized error - redirect to login
-      console.error("Unauthorized access. Please login again.");
-      console.error("Response data:", error.response?.data);
-      
       // Clear all authentication data
       localStorage.removeItem('yall_auth_token');
       sessionStorage.removeItem('yall_auth_token');
@@ -104,7 +98,6 @@ export const fetchData = async () => {
     const response = await api.get("/some-endpoint");
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
     throw error;
   }
 };

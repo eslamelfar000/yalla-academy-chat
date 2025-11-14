@@ -3,8 +3,6 @@ import Reviews from "./Reviews";
 import ReviewVideos from "./ReviewVideos/ReviewVideos";
 
 function ShowReviews({ teacher }) {
-  console.log("ShowReviews - Teacher data:", teacher);
-
   // Handle case where teacher is undefined
   if (!teacher) {
     return (
@@ -22,14 +20,19 @@ function ShowReviews({ teacher }) {
   // Ensure reviews is an array and handle different data structures
   const reviews = Array.isArray(teacher?.reviews) ? teacher.reviews : [];
 
+  const reviewVideos = Array.isArray(teacher?.video_reviews)
+    ? teacher.video_reviews
+    : [];
+
+
   // Calculate average rating safely
-  const averageRating =
-    reviews.length > 0
-      ? (
-          reviews.reduce((acc, review) => acc + (review.rating || 0), 0) /
-          reviews.length
-        ).toFixed(1)
-      : 0;
+  // const averageRating =
+  //   reviews.length > 0
+  //     ? (
+  //         reviews.reduce((acc, review) => acc + (review.rating || 0), 0) /
+  //         reviews.length
+  //       ).toFixed(1)
+  //     : 0;
 
   return (
     <div className="space-y-16">
@@ -73,11 +76,21 @@ function ShowReviews({ teacher }) {
           </h1>
         </div>
         <div className="cards w-full max-h-[350px] overflow-y-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <ReviewVideos key={index} />
-            ))}
-          </div>
+          {reviewVideos.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
+              {reviewVideos.map((reviewVideo, index) => (
+                <ReviewVideos
+                  key={reviewVideo.id || index}
+                  url={reviewVideo.url}
+                  title={reviewVideo.title}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-500 flex items-center justify-center h-60 bg-gray-100 rounded-lg shadow-lg">
+              <p className="text-main text-lg">No student review videos yet.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

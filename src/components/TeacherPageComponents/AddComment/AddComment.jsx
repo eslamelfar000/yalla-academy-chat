@@ -71,7 +71,7 @@ function AddComment({ teacherId }) {
     <>
       <div className="cover p-5 bg-white rounded-md mt-5 shadow-lg">
         <h2 className="text-xl opacity-80 pb-5 mb-5 text-center border-b-1 border-solid border-second-dark">
-          Give Cody your feedback
+          Give your feedback
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -86,7 +86,7 @@ function AddComment({ teacherId }) {
 
           <textarea
             cols="30"
-            rows="5"
+            rows="10"
             placeholder="Your comment"
             value={comment}
             className="border-1 border-second-dark border-solid focus:outline-none p-4 rounded-md focus:border-main text-sm"
