@@ -17,7 +17,7 @@ createRoot(document.getElementById("root")).render(
       <QueryClientProvider client={queryClient}>
         <SettingsProvider>
           <App />
-          <Toaster richColors position="top-left" style={{ border: "none" }} />
+          <Toaster richColors position="top-left" duration={8000} style={{ border: "none" }} />
         </SettingsProvider>
       </QueryClientProvider>
     </Provider>
