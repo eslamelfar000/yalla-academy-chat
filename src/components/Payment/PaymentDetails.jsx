@@ -12,6 +12,7 @@ import { setStep } from "../../Store/Reducer/stepSlice";
 import BtnLoading from "@/SharedComponents/BtnLoading/BtnLoading";
 import { Button } from "../ui/button";
 import { useCurrentUserData } from "../../hooks/useCurrentUserData";
+import { ExclamationTriangleIcon } from "@heroicons/react/16/solid";
 
 function PaymentDetails({ selectedPayment, payboxFile }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,13 +58,13 @@ function PaymentDetails({ selectedPayment, payboxFile }) {
         // Redirect to PayPal payment link
         window.open(data.data.payment_link, "_blank");
 
-        toast.success("Redirecting to PayPal payment...", {
+        toast.warning("Redirecting to PayPal payment...", {
           description: "Please complete your payment in the new window.",
           duration: 5000,
           style: {
             gap: "1rem",
           },
-          icon: <CheckBadgeIcon className="size-8 text-green-500" />,
+          icon: <ExclamationTriangleIcon className="size-8 text-yellow-500" />,
           action: {
             label: "close",
           },

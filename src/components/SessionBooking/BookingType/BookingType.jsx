@@ -8,13 +8,22 @@ import { useUserData } from "@/hooks/useUserData";
 function BookingType() {
   const { id } = useParams();
   const { teacherData, isLoading } = useTeacherPricing(id);
+  const booking = useSelector((state) => state.booking?.booking);
 
   const [selectedBeforeNum, setSelectedBeforeNum] = useState(1);
   const [selectedAfterNum, setSelectedAfterNum] = useState(1);
-  const [selected, setSelected] = useState("free");
+  // Initialize selected state from Redux booking state
+  const [selected, setSelected] = useState(booking?.bookingType || "free");
   const { currentUserData } = useUserData();
 
   const dispatch = useDispatch();
+
+  // Sync selected state with Redux booking state
+  useEffect(() => {
+    if (booking?.bookingType) {
+      setSelected(booking.bookingType);
+    }
+  }, [booking?.bookingType]);
 
   useEffect(() => {
     dispatch(
@@ -40,7 +49,11 @@ function BookingType() {
           type: "trail",
         })
       );
-    } else if (teacherData && !isLoading && currentUserData?.has_trail_session) {
+    } else if (
+      teacherData &&
+      !isLoading &&
+      currentUserData?.has_trail_session
+    ) {
       // If user has used trial, set default to "before" option
       setSelected("before");
       dispatch(
@@ -56,7 +69,13 @@ function BookingType() {
         })
       );
     }
-  }, [teacherData, isLoading, id, dispatch, currentUserData?.has_trail_session]);
+  }, [
+    teacherData,
+    isLoading,
+    id,
+    dispatch,
+    currentUserData?.has_trail_session,
+  ]);
 
   // Show loading state while fetching teacher data
   if (isLoading) {

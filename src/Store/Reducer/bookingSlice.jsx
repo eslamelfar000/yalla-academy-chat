@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   booking: {
-    bookingType: "free",
-    name: "Free Trail Lesson",
+    bookingType: "",
+    name: "",
     price: 0,
     totalPrice: 0,
     currency: "ILS",
