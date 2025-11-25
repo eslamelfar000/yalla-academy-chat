@@ -14,6 +14,13 @@ function convertToEmbedUrl(url) {
     }
   }
 
+  if (url.includes("youtube.com/shorts/")) {
+    const videoId = url.split("youtube.com/shorts/")[1]?.split("?")[0];
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+  }
+
   if (url.includes("youtube.com/watch")) {
     const urlParams = new URLSearchParams(url.split("?")[1]);
     const videoId = urlParams.get("v");
