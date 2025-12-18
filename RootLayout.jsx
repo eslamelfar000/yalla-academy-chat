@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp/FloatingWhatsApp";
 
 const RootLayout = () => {
   const { pathname } = useLocation();
@@ -16,6 +17,7 @@ const RootLayout = () => {
   return (
     <div>
       <Outlet /> {/* This renders the child components */}
+      <FloatingWhatsApp />
     </div>
   );
 };

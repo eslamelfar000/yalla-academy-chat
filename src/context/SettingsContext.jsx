@@ -21,6 +21,7 @@ export const SettingsProvider = ({ children }) => {
     banner: settingsData?.data || {},
     contact: settingsData?.data || {},
     about_us: settingsData?.data || {},
+    whatsapp: settingsData?.data?.whatsapp || "",
   };
 
   return (
