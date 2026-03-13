@@ -21,7 +21,9 @@ const FloatingWhatsApp = () => {
     return cleaned;
   };
 
-  const whatsappUrl = `https://api.whatsapp.com/send?phone=${formatPhoneNumber(whatsapp)}`;
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${formatPhoneNumber(
+    whatsapp
+  )}`;
 
   return (
     <a
@@ -37,4 +39,3 @@ const FloatingWhatsApp = () => {
 };
 
 export default FloatingWhatsApp;
-
