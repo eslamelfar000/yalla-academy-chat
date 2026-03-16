@@ -16,6 +16,8 @@ import EmailVerification from "@/pages/EmailVerification/EmailVerification";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import SuccessPage from "../pages/SuccessPage/SuccessPage";
 import TermsAndConditions from "../pages/TermsAndConditions/TermsAndConditions";
+import PartnerLogin from "../pages/PartnerLogin/PartnerLogin";
+import PartnerChatPage from "../pages/PartnerChat/PartnerChatPage";
 
 export const router = createBrowserRouter([
   {
@@ -87,5 +89,14 @@ export const router = createBrowserRouter([
         element: <TermsAndConditions />,
       },
     ],
+  },
+  // ── Partner routes (standalone, outside RootLayout) ──
+  {
+    path: "/partner-login",
+    element: <PartnerLogin />,
+  },
+  {
+    path: "/partner-chat",
+    element: <PartnerChatPage />,
   },
 ]);

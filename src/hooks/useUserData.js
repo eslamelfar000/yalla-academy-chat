@@ -12,7 +12,6 @@ export const useUserData = () => {
   const updateLocalStorage = useCallback((userData) => {
     if (userData?.data) {
       localStorage.setItem("yall_user_data", JSON.stringify(userData.data));
-      console.log("Updated localStorage with user data:", userData.data);
     }
   }, []);
 
