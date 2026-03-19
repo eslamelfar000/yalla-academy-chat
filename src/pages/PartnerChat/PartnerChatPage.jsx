@@ -16,7 +16,7 @@ function PartnerChatPage() {
 
   useEffect(() => {
     if (!getToken()) {
-      navigate("/partner-login", { replace: true });
+      navigate("/chat-login", { replace: true });
     }
   }, []);
 

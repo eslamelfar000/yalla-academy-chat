@@ -22,11 +22,13 @@ const EmptyMessage = ({ type = "messages" }) => {
   const content = getContent();
 
   return (
-    <div className="h-full flex flex-col justify-center">
+    <div className="h-full px-6">
       <div className="text-center flex flex-col justify-center items-center opacity-50">
-        <div className="mt-4 text-md font-medium text-default-500">
-          No Messages available
+        <div className="mt-4 text-md flex flex-col justify-center items-center">
+          <Icon icon={content.icon} className="text-2xl text-default-300" />
+          <div className="mt-2">{content.title}</div>
         </div>
+        <div className="mt-1 text-sm text-default-400">{content.subtitle}</div>
       </div>
     </div>
   );

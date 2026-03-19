@@ -101,8 +101,8 @@ const MessageFooter = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!message.trim()) {
-      alert("Please type a message before sending.");
+    if (!message.trim() && selectedFiles.length === 0) {
+      alert("Please type a message or attach a file before sending.");
       return;
     }
     if (isLoading || isUploading) return;
@@ -267,7 +267,7 @@ const MessageFooter = ({
               <textarea
                 value={message}
                 onChange={handleChange}
-                placeholder="Type your message... (required)"
+                placeholder={selectedFiles.length > 0 ? "Type your message... (optional)" : "Type your message... (required)"}
                 className="bg-background border border-default-200 outline-none focus:border-main rounded-xl break-words pl-8 md:pl-3 px-3 flex-1 h-10 pt-2 p-1 pr-8 no-scrollbar"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
@@ -303,7 +303,7 @@ const MessageFooter = ({
               </Popover>
               <Button
                 type="submit"
-                disabled={isLoading || isUploading || !message.trim()}
+                disabled={isLoading || isUploading || (!message.trim() && selectedFiles.length === 0)}
                 className="rounded-full bg-main/20 hover:bg-main/30 h-[42px] w-[42px] p-0 self-end disabled:opacity-50"
               >
                 {isLoading || isUploading ? (

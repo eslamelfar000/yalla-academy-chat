@@ -16,17 +16,17 @@ const usePartnerAuthToken = () => {
       ...options,
     });
     // Also mirror to localStorage for the axios interceptor to pick up easily
-    localStorage.setItem(PARTNER_TOKEN_KEY, token);
+    // localStorage.setItem(PARTNER_TOKEN_KEY, token);
   };
 
   const getToken = () =>
     Cookies.get(PARTNER_TOKEN_KEY) ||
-    localStorage.getItem(PARTNER_TOKEN_KEY) ||
+    // localStorage.getItem(PARTNER_TOKEN_KEY) ||
     null;
 
   const removeToken = () => {
     Cookies.remove(PARTNER_TOKEN_KEY, { path: '/' });
-    localStorage.removeItem(PARTNER_TOKEN_KEY);
+    // localStorage.removeItem(PARTNER_TOKEN_KEY);
   };
 
   // ── User data ──────────────────────────────────────────────────────────────

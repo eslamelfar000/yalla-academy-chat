@@ -22,6 +22,7 @@ export const SettingsProvider = ({ children }) => {
     contact: settingsData?.data || {},
     about_us: settingsData?.data || {},
     whatsapp: settingsData?.data?.whatsapp || "",
+    chat: settingsData?.data || {},
   };
 
   return (

@@ -2,8 +2,11 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
-import usePartnerAuthToken, { PARTNER_USER_KEY } from "@/hooks/usePartnerAuthToken";
+import usePartnerAuthToken, {
+  PARTNER_USER_KEY,
+} from "@/hooks/usePartnerAuthToken";
 import logo from "../../assets/logo.png";
+import PartnerNotes from "./PartnerNotes";
 
 // Read partner user data (isolated from student yall_user_data)
 const getPartnerUser = () => {
@@ -28,7 +31,7 @@ const PartnerChatLayout = ({ children }) => {
 
   const handleLogout = () => {
     logout();
-    navigate("/partner-login");
+    navigate("/chat-login");
   };
 
   return (
@@ -132,12 +135,17 @@ const PartnerChatLayout = ({ children }) => {
             {userData && (
               <div className="pc-user-chip">
                 <Avatar style={{ width: 30, height: 30 }}>
-                  <AvatarImage src={userData?.image} alt={userData?.name} />
+                  <AvatarImage
+                    src={userData?.user?.image}
+                    alt={userData?.user?.name}
+                  />
                   <AvatarFallback style={{ fontSize: "0.65rem" }}>
-                    {userData?.name?.slice(0, 2).toUpperCase() || "PT"}
+                    {userData?.user?.name?.slice(0, 2).toUpperCase() || "PT"}
                   </AvatarFallback>
                 </Avatar>
-                <span className="pc-user-name">{userData?.name || "Partner"}</span>
+                <span className="pc-user-name">
+                  {userData?.user?.name || "Partner"}
+                </span>
               </div>
             )}
 
@@ -149,9 +157,10 @@ const PartnerChatLayout = ({ children }) => {
         </header>
 
         {/* Main chat content */}
-        <main className="pc-content">
-          {children}
-        </main>
+        <main className="pc-content">{children}</main>
+
+        {/* Partner Notes Component */}
+        <PartnerNotes />
       </div>
     </>
   );

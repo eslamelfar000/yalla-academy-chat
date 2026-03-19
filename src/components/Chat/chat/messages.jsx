@@ -249,7 +249,20 @@ const MessageContent = ({ message, files, setImageModal }) => {
   );
 };
 
-const Messages = ({ message, onDelete }) => {
+const Messages = ({
+  message,
+  onDelete,
+  contact,
+  profile,
+  index,
+  selectedChatId,
+  handleReply,
+  replayData,
+  handleForward,
+  handlePinMessage,
+  pinnedMessages,
+  isOwnMessage: isOwnMessageProp,
+}) => {
   const user_data = JSON.parse(localStorage.getItem("yall_user_data"));
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [messageToDelete, setMessageToDelete] = useState(null);
@@ -281,8 +294,10 @@ const Messages = ({ message, onDelete }) => {
   // Use acttachmets if available, otherwise fall back to files
   const messageAttachments = attachments || files || [];
 
-  // Determine if message is from current user based on user.id inside message
-  const isOwnMessage = String(user?.id) === String(user_data?.id);
+  // Determine if message is from current user
+  const isOwnMessage = isOwnMessageProp !== undefined 
+    ? isOwnMessageProp 
+    : String(user?.id) === String(user_data?.id);
 
   const messageTime = time || created_at || updated_at;
   const senderName = safeToString(user?.name || "Unknown");
@@ -340,27 +355,37 @@ const Messages = ({ message, onDelete }) => {
             <div className="flex space-x-2 items-start justify-end group w-full rtl:space-x-reverse mb-4">
               <div className="flex flex-col items-end gap-1">
                 <div className="flex items-center gap-1">
-                  {/* <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible">
+                  <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <span className="w-7 h-7 rounded-full bg-main/20 flex items-center justify-center">
+                        <span className="w-7 h-7 rounded-full bg-main/20 hover:bg-main/30 flex items-center justify-center cursor-pointer transition-colors">
                           <Icon
                             icon="bi:three-dots-vertical"
-                            className="text-lg"
+                            className="text-lg text-main"
                           />
                         </span>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
-                        className="w-20 p-0"
+                        className="w-32 p-1"
                         align="center"
                         side="top"
                       >
-                        <DropdownMenuItem onClick={() => handleDeleteClick(id)}>
+                        <DropdownMenuItem className="cursor-pointer" onClick={() => handleReply && handleReply(safeMessageContent, contact)}>
+                          Reply
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer" onClick={() => handleForward && handleForward()}>
+                          Forward
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer" onClick={() => handlePinMessage && handlePinMessage(safeMessageContent)}>
+                          Pin
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-700" onClick={() => handleDeleteClick(id)}>
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </div> */}
+                  </div>
                   <div className="max-w-xs md:max-w-md lg:max-w-lg">
                     <div className="bg-main text-white text-sm py-2 px-3 rounded-lg">
                       <MessageContent
@@ -414,6 +439,34 @@ const Messages = ({ message, onDelete }) => {
                       setImageModal={setImageModal}
                     />
                   </div>
+                </div>
+                {/* Actions for other person's message */}
+                <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <span className="w-7 h-7 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center cursor-pointer transition-colors">
+                        <Icon
+                          icon="bi:three-dots-vertical"
+                          className="text-lg text-gray-600"
+                        />
+                      </span>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-32 p-1"
+                      align="center"
+                      side="top"
+                    >
+                      <DropdownMenuItem className="cursor-pointer" onClick={() => handleReply && handleReply(safeMessageContent, contact)}>
+                        Reply
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer" onClick={() => handleForward && handleForward()}>
+                        Forward
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer" onClick={() => handlePinMessage && handlePinMessage(safeMessageContent)}>
+                        Pin
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </div>
               <span className="text-xs text-default-500">

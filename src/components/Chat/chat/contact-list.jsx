@@ -44,9 +44,10 @@ const ContactList = ({
   openChat,
   selectedChatId,
   isLoading = false,
+  currentUser: currentUserProp,
 }) => {
-  // Get current user data from localStorage
-  const currentUser = JSON.parse(localStorage.getItem("yall_user_data") || "null");
+  // Get current user data from prop or localStorage
+  const currentUser = currentUserProp || JSON.parse(localStorage.getItem("yall_user_data") || "null");
 
   // Handle loading state
   if (isLoading) {

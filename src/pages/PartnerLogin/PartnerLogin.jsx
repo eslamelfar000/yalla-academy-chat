@@ -18,6 +18,8 @@ import BtnLoading from "@/SharedComponents/BtnLoading/BtnLoading";
 import { Icon } from "@iconify/react";
 import logo from "../../assets/logo.png";
 import loginImg from "../../assets/login.png";
+import { useSettings } from "@/context/SettingsContext";
+import { TfiReload } from "react-icons/tfi";
 
 // ─── Validation schema ────────────────────────────────────────────────────────
 const partnerSchema = z.object({
@@ -27,12 +29,13 @@ const partnerSchema = z.object({
     .min(4, "Access code must be at least 4 characters"),
 });
 
-
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function PartnerLogin() {
   const navigate = useNavigate();
   const { setToken, setPartnerUser } = usePartnerAuthToken();
   const [showCode, setShowCode] = useState(false);
+
+  const { chat: chatData, isLoading, error } = useSettings();
 
   const form = useForm({
     resolver: zodResolver(partnerSchema),
@@ -41,8 +44,8 @@ export default function PartnerLogin() {
 
   const { mutate, isPending } = useMutate({
     method: "post",
-    endpoint: "partner/login",
-    text: "Welcome! Logged in to Partner Chat.",
+    endpoint: "dashboard/login-by-code",
+    text: "Welcome! Logged in to Chat.",
     toast: true,
     onSuccess: (data) => {
       // Save token and user under PARTNER keys — never touches student keys
@@ -395,7 +398,7 @@ export default function PartnerLogin() {
               <img src={logo} alt="Yalla System" className="" />
             </div>
 
-            <h1 className="pl-heading">Login</h1>
+            <h1 className="pl-heading">Login to Chat</h1>
             <p className="pl-sub">
               Enter your access code provided by the admin
             </p>
@@ -403,7 +406,6 @@ export default function PartnerLogin() {
             {/* ── Form ── */}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-
                 {/* Admin Code */}
                 <div className="pl-field-block">
                   <FormField
@@ -420,7 +422,7 @@ export default function PartnerLogin() {
                             <Input
                               type={showCode ? "text" : "password"}
                               placeholder="Enter your access code"
-                              className="pl-input-with-icon"
+                              className="pl-input-with-icon h-12"
                               style={{ paddingRight: "2.5rem" }}
                               {...field}
                             />
@@ -431,7 +433,11 @@ export default function PartnerLogin() {
                               tabIndex={-1}
                             >
                               <Icon
-                                icon={showCode ? "heroicons:eye-slash" : "heroicons:eye"}
+                                icon={
+                                  showCode
+                                    ? "heroicons:eye-slash"
+                                    : "heroicons:eye"
+                                }
                                 style={{ fontSize: "1rem" }}
                               />
                             </button>
@@ -445,10 +451,14 @@ export default function PartnerLogin() {
 
                 {/* Hint */}
                 <div className="pl-hint">
-                  <Icon icon="mdi:information-outline" className="pl-hint-icon" />
+                  <Icon
+                    icon="mdi:information-outline"
+                    className="pl-hint-icon"
+                  />
                   <span>
-                    Your access code was provided by the Yalla System admin team.
-                    Contact your administrator if you haven't received one.
+                    Your access code was provided by the Yalla System admin
+                    team. Contact your administrator if you haven't received
+                    one.
                   </span>
                 </div>
 
@@ -480,7 +490,15 @@ export default function PartnerLogin() {
           <div className="pl-blob pl-blob-3" />
 
           {/* Hero image */}
-          <img src={loginImg} alt="Partner Portal" className="pl-hero-img" />
+          {isLoading ? (
+            <TfiReload className="!size-20 text-white animate-spin" />
+          ) : (
+            <img
+              src={chatData?.chat_login_image}
+              alt="Partner Portal"
+              className="pl-hero-img"
+            />
+          )}
         </div>
       </div>
     </>

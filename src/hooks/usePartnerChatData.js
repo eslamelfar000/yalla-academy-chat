@@ -17,7 +17,7 @@ export const getPartnerUser = () => {
 
 // ─── API calls ────────────────────────────────────────────────────────────────
 const fetchPartnerChats = async (page = 1) => {
-  const res = await partnerApi.get(`/chat?page=${page}`);
+  const res = await partnerApi.get(`dashboard/get-chats?page=${page}`);
   return res.data;
 };
 

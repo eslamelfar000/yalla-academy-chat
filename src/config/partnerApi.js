@@ -41,6 +41,7 @@ partnerApi.interceptors.response.use(
       localStorage.removeItem(PARTNER_TOKEN_KEY);
       localStorage.removeItem('partner_user_data');
       // Don't redirect here — let the components handle it
+      window.location.href = '/chat-login';
     }
     return Promise.reject(error);
   }

@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 
 export function useAxios() {
   const getToken = () => {
-    return localStorage.getItem('yall_auth_token') || sessionStorage.getItem('yall_auth_token');
+    return localStorage.getItem('yall_auth_token') || sessionStorage.getItem('yall_auth_token') || Cookies.get("partner_auth_token");
   };
 
   return axios.create({
@@ -22,6 +22,7 @@ export function useAxios() {
 const getToken = () => {
   // Check multiple possible token storage locations and keys
   const possibleTokens = [
+    Cookies.get('partner_auth_token'), // Check cookie token
     localStorage.getItem('yall_auth_token'),
     sessionStorage.getItem('yall_auth_token'),
     localStorage.getItem('yall_auth_token'),
@@ -84,6 +85,7 @@ api.interceptors.response.use(
       
       // Remove cookie token
       Cookies.remove('yall_auth_token', { path: "/" });
+      // Cookies.remove('partner_auth_token', { path: "/" });
       
       // Redirect to login page
       // window.location.href = '/login';

@@ -124,6 +124,7 @@ const ChatPage = () => {
 
     if (typeof messageData === "string") {
       // Simple text message
+      if (!messageData.trim()) return;
       finalMessageData = {
         chatId: selectedChatId,
         message: messageData,
@@ -135,12 +136,12 @@ const ChatPage = () => {
 
       console.log("Processing object message:", { message, attachments });
 
-      // Always require a message
-      if (!message || !message.trim()) return;
+      // Require a message OR attachments
+      if (!message?.trim() && (!attachments || attachments.length === 0)) return;
 
       finalMessageData = {
         chatId: selectedChatId,
-        message: message.trim(),
+        message: message?.trim() || "",
         type: "text",
         attachments: attachments || [], // Include attachments
       };
@@ -313,6 +314,7 @@ const ChatPage = () => {
                       contact={contact}
                       selectedChatId={selectedChatId}
                       openChat={openChat}
+                      currentUser={currentUser}
                     />
                   ))}
                 </>

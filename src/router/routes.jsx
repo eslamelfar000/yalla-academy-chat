@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
   },
   // ── Partner routes (standalone, outside RootLayout) ──
   {
-    path: "/partner-login",
+    path: "/chat-login",
     element: <PartnerLogin />,
   },
   {

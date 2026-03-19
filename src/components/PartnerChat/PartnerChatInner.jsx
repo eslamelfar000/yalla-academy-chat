@@ -40,23 +40,23 @@ import {
 
 // ─── Partner profile header (reads partner_user_data) ─────────────────────────
 const PartnerProfileHeader = () => {
-  const user = getPartnerUser();
+  const user = getPartnerUser();  
   return (
     <div className="flex gap-3 border-b border-default-200 p-4">
       <Avatar className="h-10 w-10">
-        <AvatarImage src={user?.image} alt={user?.name} />
+        <AvatarImage src={user?.user?.image} alt={user?.user?.name} />
         <AvatarFallback className="uppercase">
-          {getAvatarInitials(user?.name || "PT")}
+          {getAvatarInitials(user?.user?.name || "PT")}
         </AvatarFallback>
       </Avatar>
-      <div className="block">
+      <div className="flex flex-col justify-center">
         <div className="text-sm font-medium text-default-900">
           <span className="relative before:h-1.5 before:w-1.5 before:rounded-full before:bg-success before:absolute before:top-1.5 before:-right-3">
-            {user?.name || "Partner"}
+            {user?.user?.name || "Partner"}
           </span>
         </div>
         <span className="text-xs text-default-600">
-          {user?.role || "Partner"}
+          {"Student"}
         </span>
       </div>
     </div>
@@ -124,13 +124,14 @@ const PartnerChatInner = () => {
     if (!selectedChatId) return;
     let finalMessageData;
     if (typeof messageData === "string") {
+      if (!messageData.trim()) return;
       finalMessageData = { chatId: selectedChatId, message: messageData, type: "text" };
     } else if (typeof messageData === "object") {
       const { message, attachments } = messageData;
-      if (!message?.trim()) return;
+      if (!message?.trim() && (!attachments || attachments.length === 0)) return;
       finalMessageData = {
         chatId: selectedChatId,
-        message: message.trim(),
+        message: message?.trim() || "",
         type: "text",
         attachments: attachments || [],
       };
@@ -231,7 +232,7 @@ const PartnerChatInner = () => {
                       onClick={() => (window.location.href = "/partner-login")}
                       className="bg-main text-primary-foreground hover:bg-main/90"
                     >
-                      Go to Partner Login
+                      Go to Login
                     </Button>
                   )}
                 </div>
@@ -246,6 +247,7 @@ const PartnerChatInner = () => {
                     contact={contact}
                     selectedChatId={selectedChatId}
                     openChat={openChat}
+                    currentUser={currentUser}
                   />
                 ))
               )}
@@ -281,10 +283,10 @@ const PartnerChatInner = () => {
                         <div className="text-red-500 mb-2">{messagesError.message}</div>
                         {messagesError.message?.includes("login") && (
                           <Button
-                            onClick={() => (window.location.href = "/partner-login")}
+                            onClick={() => (window.location.href = "/chat-login")}
                             className="bg-main text-primary-foreground hover:bg-main/90"
                           >
-                            Go to Partner Login
+                            Go to Login
                           </Button>
                         )}
                       </div>
@@ -332,7 +334,7 @@ const PartnerChatInner = () => {
                   </div>
                 </CardContent>
 
-                <CardFooter className="flex-none flex-col px-0 py-4 border-t border-border">
+                <CardFooter className="flex-none flex-col px-0 py-6 border-t border-border !opacity-100">
                   <MessageFooter
                     handleSendMessage={handleSendMessage}
                     replay={replay}
