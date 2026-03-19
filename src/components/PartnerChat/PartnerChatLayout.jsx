@@ -31,7 +31,7 @@ const PartnerChatLayout = ({ children }) => {
 
   const handleLogout = () => {
     logout();
-    navigate("/chat-login");
+    navigate("/");
   };
 
   return (
