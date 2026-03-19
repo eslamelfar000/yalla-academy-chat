@@ -8,6 +8,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />, // Root layout containing <Outlet />
+    // remove all children and add only partner login and partner chat
     children: [
       {
         index: true, // This means "/" will render <Home />
