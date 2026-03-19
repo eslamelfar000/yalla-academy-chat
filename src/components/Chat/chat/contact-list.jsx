@@ -186,8 +186,13 @@ const ContactList = ({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-sm font-semibold text-default-900 truncate">
+            <span className="text-sm font-semibold text-default-900 truncate flex items-center gap-1">
               <SafeText>{safeFullName}</SafeText>
+              {contact?.is_reservation_finished && (
+                <span className="h-4 px-1 rounded-sm bg-destructive/10 text-destructive text-[10px] font-bold border border-destructive/20 flex items-center justify-center">
+                  F
+                </span>
+              )}
             </span>
             <span className="text-xs text-gray-500 ml-2">
               <SafeText>{formatTime(lastMessageTime) || "Now"}</SafeText>

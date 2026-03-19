@@ -122,7 +122,8 @@ export const usePartnerChatData = () => {
 // ─── Real-time messages hook (per chat) ───────────────────────────────────────
 export const usePartnerRealTimeChat = (chatId) => {
   const queryClient = useQueryClient();
-  const currentUser = getPartnerUser();
+  const partnerAuth = getPartnerUser();
+  const currentUser = partnerAuth?.user || partnerAuth;
 
   const {
     data: messagesData,

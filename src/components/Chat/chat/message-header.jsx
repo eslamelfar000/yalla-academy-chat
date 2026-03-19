@@ -85,8 +85,13 @@ const MessageHeader = ({
           ></Badge> */}
         </div>
         <div className="hidden lg:block">
-          <div className="text-sm font-medium text-default-900 ">
+          <div className="text-sm font-medium text-default-900 flex items-center gap-2">
             <span className="relative">{userName}</span>
+            {contact?.is_reservation_finished && (
+              <Badge variant="soft" color="destructive" className="h-4 px-1.5 text-[10px] capitalize">
+                Finished
+              </Badge>
+            )}
           </div>
           <span className="text-xs text-default-500">
             {isActive ? "Active Now" : "Offline"}

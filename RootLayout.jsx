@@ -17,7 +17,7 @@ const RootLayout = () => {
   return (
     <div>
       <Outlet /> {/* This renders the child components */}
-      <FloatingWhatsApp />
+      {/* <FloatingWhatsApp /> */}
     </div>
   );
 };

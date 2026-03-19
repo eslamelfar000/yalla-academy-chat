@@ -365,25 +365,6 @@ const Messages = ({
                           />
                         </span>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        className="w-32 p-1"
-                        align="center"
-                        side="top"
-                      >
-                        <DropdownMenuItem className="cursor-pointer" onClick={() => handleReply && handleReply(safeMessageContent, contact)}>
-                          Reply
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer" onClick={() => handleForward && handleForward()}>
-                          Forward
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer" onClick={() => handlePinMessage && handlePinMessage(safeMessageContent)}>
-                          Pin
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-700" onClick={() => handleDeleteClick(id)}>
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
                   <div className="max-w-xs md:max-w-md lg:max-w-lg">
@@ -439,34 +420,6 @@ const Messages = ({
                       setImageModal={setImageModal}
                     />
                   </div>
-                </div>
-                {/* Actions for other person's message */}
-                <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <span className="w-7 h-7 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center cursor-pointer transition-colors">
-                        <Icon
-                          icon="bi:three-dots-vertical"
-                          className="text-lg text-gray-600"
-                        />
-                      </span>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className="w-32 p-1"
-                      align="center"
-                      side="top"
-                    >
-                      <DropdownMenuItem className="cursor-pointer" onClick={() => handleReply && handleReply(safeMessageContent, contact)}>
-                        Reply
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer" onClick={() => handleForward && handleForward()}>
-                        Forward
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer" onClick={() => handlePinMessage && handlePinMessage(safeMessageContent)}>
-                        Pin
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                 </div>
               </div>
               <span className="text-xs text-default-500">

@@ -51,7 +51,7 @@ export default function PartnerLogin() {
       // Save token and user under PARTNER keys — never touches student keys
       setToken(data?.token);
       setPartnerUser(data?.data || data?.user);
-      navigate("/partner-chat");
+      navigate("/academy-chat");
     },
   });
 
@@ -394,8 +394,12 @@ export default function PartnerLogin() {
         <div className="pl-left">
           <div className="pl-form-box">
             {/* Logo */}
-            <div className="pl-logo-row ">
+            {/* <div className="pl-logo-row ">
               <img src={logo} alt="Yalla System" className="" />
+            </div> */}
+
+            <div className="icon text-center flex justify-center text-main">
+              <Icon icon="mdi:shield-key-outline" className="size-20" />
             </div>
 
             <h1 className="pl-heading">Login to Chat</h1>
@@ -456,9 +460,8 @@ export default function PartnerLogin() {
                     className="pl-hint-icon"
                   />
                   <span>
-                    Your access code was provided by the Yalla System admin
-                    team. Contact your administrator if you haven't received
-                    one.
+                    Your access code was provided by the System admin team.
+                    Contact your administrator if you haven't received one.
                   </span>
                 </div>
 

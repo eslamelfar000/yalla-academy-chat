@@ -96,7 +96,8 @@ const PartnerChatInner = () => {
   } = usePartnerRealTimeChat(selectedChatId);
 
   // ── Current partner user ────────────────────────────────────────────────────
-  const currentUser = getPartnerUser();
+  const partnerAuth = getPartnerUser();
+  const currentUser = partnerAuth?.user || partnerAuth;
 
   // ── Safe replay data ────────────────────────────────────────────────────────
   const safeReplayData = replayData && typeof replayData === "object" ? replayData : {};
@@ -335,13 +336,20 @@ const PartnerChatInner = () => {
                 </CardContent>
 
                 <CardFooter className="flex-none flex-col px-0 py-6 border-t border-border !opacity-100">
-                  <MessageFooter
-                    handleSendMessage={handleSendMessage}
-                    replay={replay}
-                    setReply={setReply}
-                    replayData={replayData}
-                    isLoading={createMessageMutation.isPending}
-                  />
+                  {currentChat?.is_reservation_finished ? (
+                    <div className="w-full text-sm text-center py-4 px-6 bg-muted/20 text-muted-foreground font-medium flex items-center justify-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-destructive" />
+                      This conversation is closed because the reservation is finished.
+                    </div>
+                  ) : (
+                    <MessageFooter
+                      handleSendMessage={handleSendMessage}
+                      replay={replay}
+                      setReply={setReply}
+                      replayData={replayData}
+                      isLoading={createMessageMutation.isPending}
+                    />
+                  )}
                   {createMessageMutation.isError && (
                     <div className="px-4 py-2 text-red-500 text-sm">
                       Error: {createMessageMutation.error?.message}

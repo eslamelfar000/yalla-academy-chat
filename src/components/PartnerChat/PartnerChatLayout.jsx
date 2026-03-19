@@ -127,8 +127,8 @@ const PartnerChatLayout = ({ children }) => {
         {/* Sticky top bar */}
         <header className="pc-topbar">
           <div className="pc-topbar-logo">
-            <img src={logo} alt="Yalla System" />
-            <span className="pc-partner-badge">Partner Chat</span>
+            {/* <img src={logo} alt="Yalla System" /> */}
+            <span className="pc-partner-badge">Chat</span>
           </div>
 
           <div className="pc-topbar-right">

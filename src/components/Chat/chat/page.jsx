@@ -43,6 +43,7 @@ const ChatPage = () => {
     sendMessageMutation: createMessageMutation,
     deleteMessageMutation,
   } = useChatData();
+  
 
   // Use the new real-time chat hook
   const {
@@ -438,13 +439,20 @@ const ChatPage = () => {
                   </div>
                 </CardContent>
                 <CardFooter className="flex-none flex-col px-0 py-4 border-t border-border">
-                  <MessageFooter
-                    handleSendMessage={handleSendMessage}
-                    replay={replay}
-                    setReply={setReply}
-                    replayData={replayData}
-                    isLoading={createMessageMutation.isPending}
-                  />
+                  {currentChat?.is_reservation_finished ? (
+                    <div className="w-full text-sm text-center py-4 px-6 bg-muted/20 text-muted-foreground font-medium flex items-center justify-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-destructive" />
+                      This conversation is closed because the reservation is finished.
+                    </div>
+                  ) : (
+                    <MessageFooter
+                      handleSendMessage={handleSendMessage}
+                      replay={replay}
+                      setReply={setReply}
+                      replayData={replayData}
+                      isLoading={createMessageMutation.isPending}
+                    />
+                  )}
                   {createMessageMutation.isError && (
                     <div className="px-4 py-2 text-red-500 text-sm">
                       Error sending message:{" "}
