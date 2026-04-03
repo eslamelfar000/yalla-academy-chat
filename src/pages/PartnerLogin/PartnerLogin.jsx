@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -32,10 +32,11 @@ const partnerSchema = z.object({
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function PartnerLogin() {
   const navigate = useNavigate();
-  const { setToken, setPartnerUser } = usePartnerAuthToken();
+  const { setToken, setPartnerUser, getToken } = usePartnerAuthToken();
   const [showCode, setShowCode] = useState(false);
 
   const { chat: chatData, isLoading, error } = useSettings();
+
 
   const form = useForm({
     resolver: zodResolver(partnerSchema),
@@ -56,6 +57,13 @@ export default function PartnerLogin() {
   });
 
   const onSubmit = (values) => mutate(values);
+
+
+  useEffect(() => {
+    if (getToken()) {
+      navigate("/academy-chat");
+    }
+  }, [getToken, navigate]);
 
   return (
     <>

@@ -18,7 +18,7 @@ function PartnerChatPage() {
     if (!getToken()) {
       navigate("/", { replace: true });
     }
-  }, []);
+  }, [getToken]);
 
   return (
     <PartnerChatLayout>
