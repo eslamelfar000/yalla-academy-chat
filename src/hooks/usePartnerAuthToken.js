@@ -51,6 +51,7 @@ const usePartnerAuthToken = () => {
   const logout = () => {
     removeToken();
     removePartnerUser();
+    localStorage.removeItem('partnerNotesSeen');
     console.log('[Partner] Auth data cleared');
   };
 

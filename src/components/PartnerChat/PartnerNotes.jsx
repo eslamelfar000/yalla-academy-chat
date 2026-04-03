@@ -12,19 +12,64 @@ import {
 /**
  * PartnerNotes - Floating notes icon and dialog for partner chat
  * - Shows floating icon when notes are available
- * - Opens dialog every time chat is accessed
+ * - Opens dialog once per login session (stored in localStorage)
+ * - Clears seen flag on logout or when token is missing
  * - Uses shadcn Dialog component
  */
 const PartnerNotes = () => {
   const { chat: chatData } = useSettings();
   const [showNotesDialog, setShowNotesDialog] = useState(false);
 
-  // Open dialog every time component mounts (when chat is opened)
+  const STORAGE_KEY = "partnerNotesSeen";
+
+  // Helper to get auth token from cookies
+  const getAuthToken = () => {
+    const cookies = document.cookie.split(";");
+    const authCookie = cookies.find((c) => c.trim().startsWith("auth_token="));
+    return authCookie ? authCookie.split("=")[1] : null;
+  };
+
+  // Open dialog once per login session
   useEffect(() => {
-    if (chatData?.chat_notes) {
+    const hasSeenNotes = localStorage.getItem(STORAGE_KEY);
+    const hasAuthToken = getAuthToken();
+
+    if (chatData?.chat_notes && !hasSeenNotes && hasAuthToken) {
       setShowNotesDialog(true);
+      localStorage.setItem(STORAGE_KEY, "true");
+    }
+
+    // If no token, clear the flag
+    if (!hasAuthToken) {
+      localStorage.removeItem(STORAGE_KEY);
     }
   }, [chatData]);
+
+  // Monitor token changes and clear flag on logout
+  useEffect(() => {
+    const checkToken = () => {
+      const hasAuthToken = getAuthToken();
+      if (!hasAuthToken) {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    };
+
+    // Check periodically for token changes
+    const interval = setInterval(checkToken, 5000);
+
+    // Also listen for storage events (in case of logout from another tab)
+    const handleStorage = (e) => {
+      if (e.key === "logout") {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, []);
 
   // Don't render if no notes available
   if (!chatData?.chat_notes) {
