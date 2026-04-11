@@ -37,7 +37,6 @@ export default function PartnerLogin() {
 
   const { chat: chatData, isLoading, error } = useSettings();
 
-
   const form = useForm({
     resolver: zodResolver(partnerSchema),
     defaultValues: { code: "" },
@@ -58,7 +57,6 @@ export default function PartnerLogin() {
 
   const onSubmit = (values) => mutate(values);
 
-
   useEffect(() => {
     if (getToken()) {
       navigate("/academy-chat");
@@ -67,340 +65,13 @@ export default function PartnerLogin() {
 
   return (
     <>
-      {/* ─── Scoped styles ────────────────────────────────────────────────── */}
-      <style>{`
-        /* ── Root ── */
-        .pl-root {
-          display: flex;
-          flex-direction: column-reverse;
-          min-height: 100vh;
-          overflow: hidden;
-          background: #f5f6f9;
-        }
-        @media (min-width: 768px) {
-          .pl-root { flex-direction: row; }
-        }
-
-        /* ══════════════════════════════════════════════
-           LEFT — Form Panel
-        ══════════════════════════════════════════════ */
-        .pl-left {
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 2rem 1.25rem;
-          background: #ffffff;
-        }
-        @media (min-width: 768px) {
-          .pl-left { padding: 3rem 2.5rem; }
-        }
-
-        .pl-form-box {
-          width: 100%;
-          max-width: 420px;
-        }
-
-        /* Logo row */
-        .pl-logo-row {
-          display: flex;
-          justify-content: center;
-        }
-        .pl-logo-row img { width: 250px; object-fit: contain; }
-
-        /* Titles */
-        .pl-heading {
-          font-size: 1.55rem;
-          font-weight: 800;
-          color: #1e293b;
-          text-align: center;
-          margin-bottom: 0.35rem;
-          letter-spacing: -0.02em;
-        }
-        .pl-sub {
-          font-size: 0.85rem;
-          color: #64748b;
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-
-        /* Badge */
-        .pl-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.35rem;
-          font-size: 0.7rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.07em;
-          color: #5685ce;
-          background: #eef3fb;
-          border: 1px solid #b8d0ef;
-          border-radius: 999px;
-          padding: 0.25rem 0.7rem;
-          margin-bottom: 1rem;
-        }
-        .pl-badge-row {
-          display: flex;
-          justify-content: center;
-        }
-
-        /* Input group label override */
-        .pl-form-box .pl-field-block {
-          margin-bottom: 1.1rem;
-        }
-
-        /* Input icon wrapper */
-        .pl-input-wrap {
-          position: relative;
-        }
-        .pl-input-icon {
-          position: absolute;
-          left: 0.85rem;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #94a3b8;
-          font-size: 1rem;
-          pointer-events: none;
-          z-index: 1;
-        }
-        .pl-input-with-icon {
-          padding-left: 2.4rem !important;
-        }
-
-        /* Toggle code visibility */
-        .pl-toggle-btn {
-          position: absolute;
-          right: 0.5rem;
-          top: 50%;
-          transform: translateY(-50%);
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 0.3rem;
-          color: #94a3b8;
-          display: flex;
-          align-items: center;
-          border-radius: 6px;
-          transition: color 0.2s;
-        }
-        .pl-toggle-btn:hover { color: #5685ce; }
-
-        /* Submit button */
-        .pl-submit {
-          width: 100%;
-          background: linear-gradient(135deg, #5685ce 0%, #3c629d 100%) !important;
-          color: #fff !important;
-          font-weight: 700 !important;
-          font-size: 0.95rem !important;
-          padding: 0.8rem !important;
-          border-radius: 12px !important;
-          border: none !important;
-          cursor: pointer;
-          box-shadow: 0 4px 18px rgba(86,133,206,0.35);
-          transition: all 0.2s !important;
-          margin-top: 0.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-        }
-        .pl-submit:hover:not(:disabled) {
-          box-shadow: 0 6px 24px rgba(86,133,206,0.50);
-          transform: translateY(-1px);
-        }
-        .pl-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-
-        /* Divider */
-        .pl-divider {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          margin: 1.5rem 0;
-          color: #cbd5e1;
-          font-size: 0.78rem;
-        }
-        .pl-divider::before, .pl-divider::after {
-          content: "";
-          flex: 1;
-          height: 1px;
-          background: #e2e8f0;
-        }
-
-        /* Footer link */
-        .pl-footer-link {
-          text-align: center;
-          font-size: 0.82rem;
-          color: #64748b;
-          margin-top: 1.25rem;
-        }
-        .pl-footer-link a {
-          color: #4f46e5;
-          font-weight: 600;
-          text-decoration: none;
-        }
-        .pl-footer-link a:hover { text-decoration: underline; }
-
-        /* Code hint box */
-        .pl-hint {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.5rem;
-          background: #eef3fb;
-          border: 1px solid #b8d0ef;
-          border-radius: 10px;
-          padding: 0.65rem 0.85rem;
-          font-size: 0.78rem;
-          color: #3c629d;
-          margin-top: 0.75rem;
-          line-height: 1.5;
-        }
-        .pl-hint-icon { flex-shrink: 0; margin-top: 1px; font-size: 1rem; }
-
-        /* ══════════════════════════════════════════════
-           RIGHT — Visual Panel
-        ══════════════════════════════════════════════ */
-        .pl-right {
-          flex: 1;
-          display: none;
-          position: relative;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(145deg, #1e3a5f 0%, #335FA2 50%, #5685ce 100%);
-          overflow: hidden;
-          padding: 3rem 2rem;
-        }
-        @media (min-width: 768px) {
-          .pl-right { display: flex; }
-        }
-
-        /* Decorative blobs */
-        .pl-blob {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(60px);
-          opacity: 0.35;
-          pointer-events: none;
-        }
-        .pl-blob-1 {
-          width: 320px; height: 320px;
-          background: #5685ce;
-          top: -80px; right: -80px;
-        }
-        .pl-blob-2 {
-          width: 260px; height: 260px;
-          background: #3c629d;
-          bottom: -60px; left: -60px;
-        }
-        .pl-blob-3 {
-          width: 180px; height: 180px;
-          background: #87b4e8;
-          top: 40%; left: 5%;
-          opacity: 0.25;
-        }
-
-        /* Back-to-home link */
-        .pl-back {
-          position: absolute;
-          top: 1.25rem;
-          right: 1.25rem;
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-          font-size: 0.82rem;
-          font-weight: 600;
-          color: rgba(255,255,255,0.85);
-          text-decoration: none;
-          background: rgba(255,255,255,0.1);
-          border: 1px solid rgba(255,255,255,0.15);
-          padding: 0.4rem 0.85rem;
-          border-radius: 999px;
-          backdrop-filter: blur(6px);
-          transition: background 0.2s;
-        }
-        .pl-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
-
-        /* Right panel hero image */
-        .pl-hero-img {
-          width: 100%;
-          object-fit: contain;
-          position: relative;
-          z-index: 2;
-          filter: drop-shadow(0 24px 40px rgba(0,0,0,0.35));
-          animation: pl-float 4s ease-in-out infinite alternate;
-        }
-        @keyframes pl-float {
-          from { transform: translateY(0); }
-          to   { transform: translateY(-14px); }
-        }
-
-        /* Right-panel text */
-        .pl-right-title {
-          position: relative;
-          z-index: 2;
-          font-size: 1.75rem;
-          font-weight: 800;
-          color: #fff;
-          text-align: center;
-          margin-top: 1.75rem;
-          line-height: 1.25;
-          letter-spacing: -0.02em;
-        }
-        .pl-right-sub {
-          position: relative;
-          z-index: 2;
-          font-size: 0.88rem;
-          color: rgba(255,255,255,0.72);
-          text-align: center;
-          margin-top: 0.5rem;
-          max-width: 320px;
-          line-height: 1.6;
-        }
-
-        /* Feature list */
-        .pl-features {
-          position: relative;
-          z-index: 2;
-          margin-top: 1.75rem;
-          display: flex;
-          flex-direction: column;
-          gap: 0.6rem;
-          width: 100%;
-          max-width: 300px;
-        }
-        .pl-feature {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          font-size: 0.82rem;
-          color: rgba(255,255,255,0.88);
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 10px;
-          padding: 0.6rem 0.85rem;
-          backdrop-filter: blur(4px);
-          transition: background 0.2s;
-        }
-        .pl-feature:hover { background: rgba(255,255,255,0.14); }
-        .pl-feature-icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 28px;
-          height: 28px;
-          border-radius: 8px;
-          background: rgba(255,255,255,0.15);
-          font-size: 1rem;
-          flex-shrink: 0;
-          color: #fff;
-        }
-      `}</style>
-
-      <div className="pl-root">
+      <div
+        className="flex flex-col-reverse md:flex-row min-h-screen overflow-hidden"
+        style={{ background: "#f5f6f9" }}
+      >
         {/* ══ LEFT: Form ══════════════════════════════════════════════════════ */}
-        <div className="pl-left">
-          <div className="pl-form-box">
+        <div className="flex-1 flex items-center justify-center p-8 md:p-10 bg-white">
+          <div className="w-full max-w-[420px]">
             {/* Logo */}
             {/* <div className="pl-logo-row ">
               <img src={logo} alt="Yalla System" className="" />
@@ -410,8 +81,20 @@ export default function PartnerLogin() {
               <Icon icon="mdi:shield-key-outline" className="size-20" />
             </div>
 
-            <h1 className="pl-heading">Login to Chat</h1>
-            <p className="pl-sub">
+            <h1
+              className="text-2xl font-extrabold text-center mb-1 tracking-tight"
+              style={{
+                color: "#1e293b",
+                fontSize: "1.55rem",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Login to Chat
+            </h1>
+            <p
+              className="text-center mb-8"
+              style={{ color: "#64748b", fontSize: "0.85rem" }}
+            >
               Enter your access code provided by the admin
             </p>
 
@@ -419,7 +102,7 @@ export default function PartnerLogin() {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 {/* Admin Code */}
-                <div className="pl-field-block">
+                <div className="mb-[1.1rem]">
                   <FormField
                     control={form.control}
                     name="code"
@@ -427,20 +110,28 @@ export default function PartnerLogin() {
                       <FormItem>
                         <FormLabel>Access Code</FormLabel>
                         <FormControl>
-                          <div className="pl-input-wrap">
-                            <span className="pl-input-icon">
+                          <div className="relative">
+                            <span
+                              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-base pointer-events-none z-10"
+                              style={{ color: "#94a3b8", left: "0.85rem" }}
+                            >
                               <Icon icon="mdi:shield-key-outline" />
                             </span>
                             <Input
                               type={showCode ? "text" : "password"}
                               placeholder="Enter your access code"
-                              className="pl-input-with-icon h-12"
+                              className="pl-[2.4rem] h-12"
                               style={{ paddingRight: "2.5rem" }}
                               {...field}
                             />
                             <button
                               type="button"
-                              className="pl-toggle-btn"
+                              className="absolute right-2 top-1/2 -translate-y-1/2 bg-transparent border-0 cursor-pointer flex items-center rounded-md transition-colors"
+                              style={{
+                                right: "0.5rem",
+                                padding: "0.3rem",
+                                color: "#94a3b8",
+                              }}
                               onClick={() => setShowCode((s) => !s)}
                               tabIndex={-1}
                             >
@@ -462,10 +153,19 @@ export default function PartnerLogin() {
                 </div>
 
                 {/* Hint */}
-                <div className="pl-hint">
+                <div
+                  className="flex items-start gap-2 rounded-xl mt-3 leading-6"
+                  style={{
+                    background: "#eef3fb",
+                    border: "1px solid #b8d0ef",
+                    padding: "0.65rem 0.85rem",
+                    fontSize: "0.78rem",
+                    color: "#3c629d",
+                  }}
+                >
                   <Icon
                     icon="mdi:information-outline"
-                    className="pl-hint-icon"
+                    className="flex-shrink-0 mt-0.5 text-base"
                   />
                   <span>
                     Your access code was provided by the System admin team.
@@ -476,7 +176,17 @@ export default function PartnerLogin() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="pl-submit"
+                  className="w-full border-0 cursor-pointer transition-all mt-2 flex items-center justify-center gap-2"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #5685ce 0%, #3c629d 100%)",
+                    color: "#fff",
+                    fontWeight: "700",
+                    fontSize: "0.95rem",
+                    padding: "0.8rem",
+                    borderRadius: "12px",
+                    boxShadow: "0 4px 18px rgba(86,133,206,0.35)",
+                  }}
                   disabled={isPending}
                 >
                   {isPending ? (
@@ -494,11 +204,44 @@ export default function PartnerLogin() {
         </div>
 
         {/* ══ RIGHT: Visual panel ═════════════════════════════════════════════ */}
-        <div className="pl-right">
+        <div
+          className="flex-1 relative flex flex-col items-center justify-center overflow-hidden p-12 md:p-4 max-h-[250px] md:max-h-screen"
+          style={{
+            background:
+              "linear-gradient(145deg, #1e3a5f 0%, #335FA2 50%, #5685ce 100%)",
+          }}
+        >
           {/* Decorative blobs */}
-          <div className="pl-blob pl-blob-1" />
-          <div className="pl-blob pl-blob-2" />
-          <div className="pl-blob pl-blob-3" />
+          <div
+            className="absolute rounded-full blur-[60px] opacity-35 pointer-events-none"
+            style={{
+              width: "320px",
+              height: "320px",
+              background: "#5685ce",
+              top: "-80px",
+              right: "-80px",
+            }}
+          />
+          <div
+            className="absolute rounded-full blur-[60px] opacity-35 pointer-events-none"
+            style={{
+              width: "260px",
+              height: "260px",
+              background: "#3c629d",
+              bottom: "-60px",
+              left: "-60px",
+            }}
+          />
+          <div
+            className="absolute rounded-full blur-[60px] opacity-25 pointer-events-none"
+            style={{
+              width: "180px",
+              height: "180px",
+              background: "#87b4e8",
+              top: "40%",
+              left: "5%",
+            }}
+          />
 
           {/* Hero image */}
           {isLoading ? (
@@ -507,7 +250,7 @@ export default function PartnerLogin() {
             <img
               src={chatData?.chat_login_image}
               alt="Partner Portal"
-              className="pl-hero-img"
+              className="w-full object-contain relative z-20 drop-shadow-[0_24px_40px_rgba(0,0,0,0.35)] h-[250px] md:h-full"
             />
           )}
         </div>
