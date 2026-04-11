@@ -25,7 +25,9 @@ const PartnerNotes = () => {
   // Helper to get auth token from cookies
   const getAuthToken = () => {
     const cookies = document.cookie.split(";");
-    const authCookie = cookies.find((c) => c.trim().startsWith("auth_token="));
+    const authCookie = cookies.find((c) =>
+      c.trim().startsWith("partner_auth_token="),
+    );
     return authCookie ? authCookie.split("=")[1] : null;
   };
 
@@ -34,7 +36,7 @@ const PartnerNotes = () => {
     const hasSeenNotes = localStorage.getItem(STORAGE_KEY);
     const hasAuthToken = getAuthToken();
 
-    if (chatData?.chat_notes && !hasSeenNotes && hasAuthToken) {
+    if (chatData?.notes && !hasSeenNotes && hasAuthToken) {
       setShowNotesDialog(true);
       localStorage.setItem(STORAGE_KEY, "true");
     }
@@ -72,7 +74,7 @@ const PartnerNotes = () => {
   }, []);
 
   // Don't render if no notes available
-  if (!chatData?.chat_notes) {
+  if (!chatData?.notes) {
     return null;
   }
 
@@ -111,7 +113,7 @@ const PartnerNotes = () => {
           </DialogHeader>
           <div className="pc-notes-content px-6 py-4 bg-gradient-to-b from-gray-50 to-white">
             <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-              <div dangerouslySetInnerHTML={{ __html: chatData.chat_notes }} />
+              <div dangerouslySetInnerHTML={{ __html: chatData.notes }} />
             </div>
           </div>
         </DialogContent>
