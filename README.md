@@ -20,7 +20,7 @@ React 18, Vite, Tailwind CSS, shadcn/ui (Radix UI), TanStack Query, Redux Toolki
 
 ## Running it locally
 
-Requires Node 20.
+Requires Node 24.
 
 ```bash
 npm install
